@@ -1,6 +1,8 @@
 'use client';
 
 import ProductCard from "../app/components/ProductCard";
+import { getImageUrl } from "../app/utils/getImageUrl";
+import {useEffect, useState} from "react";
 
 const products = [
   {id: 1, name: "Áo thun nam", price: 250000, image: "/images/shirt.jpg"},
@@ -22,6 +24,15 @@ const products = [
 ];
 
 export default function Home() {
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    async function fetchImage() {
+      const url = await getImageUrl("images/1.jpg");
+      setImageUrl(url);
+    }
+    fetchImage();
+  }, []);
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Sản phẩm nổi bật</h1>
