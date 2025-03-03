@@ -1,49 +1,71 @@
-"use client"; // Vì có sự kiện click nên cần "use client"
+"use client"; // Đảm bảo Next.js chạy ở chế độ client
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import firstBanner from '../../images/banner1.jpg'
+import secondBanner from '../../images/banner2.jpg'
+import banner3th from '../../images/banner3.jpg'
 
-import { useState } from "react";
-import { FaHome, FaShoppingCart, FaBoxOpen, FaBars, FaTimes } from "react-icons/fa";
+const images = [
+    firstBanner,
+    secondBanner,
+    banner3th,
+];
 
-export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+export default function FeaturedCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
-    <div className="flex">
-      {/* Sidebar */}
-      <div
-        className={`bg-gray-900 text-white h-screen p-5 transition-all duration-300 ${
-          isOpen ? "w-64" : "w-16"
-        }`}
-      >
-        {/* Toggle Button */}
+      <div className="relative w-full max-w-6xl mx-auto overflow-hidden rounded-lg shadow-lg">
+        {/* Hiển thị ảnh */}
+        <Image
+            src={images[currentIndex]}
+            alt="Featured Image"
+            width={800}
+            height={400}
+            className="w-full h-[400px] object-cover transition-all duration-500"
+        />
+
+        {/* Nút điều hướng */}
         <button
-          className="text-white mb-6 focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800/50 text-white p-2 rounded-full hover:bg-gray-800 transition"
+            onClick={prevSlide}
         >
-          {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          <FaChevronLeft size={24} />
+        </button>
+        <button
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800/50 text-white p-2 rounded-full hover:bg-gray-800 transition"
+            onClick={nextSlide}
+        >
+          <FaChevronRight size={24} />
         </button>
 
-        {/* Menu Items */}
-        <nav className="space-y-4">
-          <a href="#" className="flex items-center space-x-3 hover:text-gray-400">
-            <FaHome size={20} />
-            {isOpen && <span>Trang chủ</span>}
-          </a>
-          <a href="#" className="flex items-center space-x-3 hover:text-gray-400">
-            <FaShoppingCart size={20} />
-            {isOpen && <span>Giỏ hàng</span>}
-          </a>
-          <a href="#" className="flex items-center space-x-3 hover:text-gray-400">
-            <FaBoxOpen size={20} />
-            {isOpen && <span>Sản phẩm</span>}
-          </a>
-        </nav>
+        {/* Chấm tròn chỉ báo */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2">
+          {images.map((_, index) => (
+              <span
+                  key={index}
+                  className={`h-3 w-3 rounded-full ${
+                      index === currentIndex ? "bg-white" : "bg-gray-400"
+                  }`}
+              />
+          ))}
+        </div>
       </div>
-
-      {/* Nội dung chính */}
-      <div className="flex-1 p-6">
-        <h1 className="text-2xl font-bold">Nội dung chính</h1>
-        <p>Đây là khu vực hiển thị nội dung của trang.</p>
-      </div>
-    </div>
   );
 }

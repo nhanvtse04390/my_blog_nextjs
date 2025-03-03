@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import Sidebar from "@/app/components/layout/Sidebar";
+import FeaturedCarousel from "@/app/components/layout/Sidebar";
 
 export const metadata: Metadata = {
   title: "E-commerce Site",
@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="relative">
         <Header />
-        {/*<Sidebar />*/}
+        <FeaturedCarousel />
         <main className="pt-16">{children}</main>
         <Footer />
       </body>

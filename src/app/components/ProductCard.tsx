@@ -1,25 +1,53 @@
 import {useEffect, useState} from "react";
 import {getImageUrl} from "@/app/utils/getImageUrl";
+import Image from 'next/image';
+import noImage from '../images/noImage.png'
 
 export default function ProductCard({product}: { product: any }) {
-  const [imageUrl, setImageUrl] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
 
-  useEffect(() => {
-    async function fetchImage() {
-      const url = await getImageUrl("images/1.jpg");
-      setImageUrl(url);
-    }
+    useEffect(() => {
+        async function fetchImage() {
+            const number = Math.floor(Math.random() * 6) + 1
+            const url = await getImageUrl(`images/${number}.jpg`);
+            setImageUrl(url);
+        }
 
-    fetchImage();
-  }, []);
-  return (
-    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
-      <img src={imageUrl} alt="Uploaded" className="w-64 h-64 object-cover mt-2"/>
-      <h3 className="text-lg font-semibold mt-3">{product.name}</h3>
-      <p className="text-gray-600 mt-1">{product.price} đ</p>
-      <button className="mt-3 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-        Thêm vào giỏ hàng
-      </button>
-    </div>
-  );
+        fetchImage();
+    }, []);
+    return (
+        <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition flex flex-col">
+            <div className="h-[170px]">
+                {imageUrl ? (
+                    <Image
+                        src={imageUrl}
+                        alt="Hình ảnh"
+                        width={150}
+                        height={150}
+                        style={{width:"150px",height:"150px"}}
+                        className="rounded-xl"
+                    />
+                ) : (
+                    <Image
+                        src={noImage}
+                        alt="Ảnh tạm"
+                        width={170}
+                        height={170}
+                    />
+                )}
+            </div>
+            <div className="mt-auto">
+                <h3 className="mt-3 over-flow:hidden">{product.name}</h3>
+                <p className="font-semibold mt-1">{product.price} ₫</p>
+                <button className="mt-3 w-full px-3 py-2 rounded-full bg-blue-500 text-white font-medium
+                    transition-all duration-300 ease-in-out shadow-lg
+                    hover:bg-blue-600 hover:shadow-xl active:scale-95
+                    backdrop-blur-lg bg-opacity-80">
+                    Chi tiết
+                </button>
+
+
+            </div>
+        </div>
+    );
 }
