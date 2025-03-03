@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Tạo instance của axios
 const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -34,8 +34,6 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    console.log("vao day?",error)
-
     // Xử lý lỗi
     if (error.response) {
       // Lỗi từ phía server (ví dụ: 404, 500)
