@@ -5,6 +5,7 @@ import {useState} from "react";
 import {FaShoppingCart, FaUser} from "react-icons/fa";
 import leoShop from "../../images/leoShop.png";
 import Image from "next/image";
+import {redirectHomePage} from "@/app/hooks/productHook";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,8 @@ const Header = () => {
                     width={60}
                     height={60}
                     alt="logo"
+                    onClick={redirectHomePage}
+                    className="cursor-pointer"
                 />
 
                 {/* Search */}

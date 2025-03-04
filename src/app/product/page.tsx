@@ -1,4 +1,5 @@
 import Image from "next/image";
+import noImage from "@/app/images/noImage.png";
 
 export default function ProductDetail({params}: { params: { id: string } }) {
   const product = {id: 1, name: "Áo thun nam", price: 250000, image: "/images/shirt.jpg"}
@@ -6,14 +7,22 @@ export default function ProductDetail({params}: { params: { id: string } }) {
     <div className="max-w-6xl mx-auto p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative w-full h-96">
-          <Image
-            src={product.imageUrl}
-            alt={product.name}
+          {
+            product.imageUrl ? (
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                className="rounded-lg object-cover shadow-lg"
+              />) : (
+              <Image
+                src={noImage}
+                alt="Ảnh tạm"
+                width={300}
+                height={300}
+              />
+            )
+          }
 
-
-
-            className="rounded-lg object-cover shadow-lg"
-          />
         </div>
 
         <div className="space-y-4">
