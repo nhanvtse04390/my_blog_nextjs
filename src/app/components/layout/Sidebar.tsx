@@ -31,7 +31,7 @@ export default function FeaturedCarousel() {
   };
 
   return (
-      <div className="relative w-full max-w-6xl mx-auto overflow-hidden rounded-lg shadow-lg">
+      <div className="relative w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-lg mb-1">
         {/* Hiển thị ảnh */}
         <Image
             src={images[currentIndex]}

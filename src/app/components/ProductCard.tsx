@@ -17,7 +17,7 @@ export default function ProductCard({product}: { product: any }) {
     }, []);
     return (
         <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition flex flex-col">
-            <div className="h-[170px]">
+            <div className="h-[170px] cursor-pointer">
                 {imageUrl ? (
                     <Image
                         src={imageUrl}
@@ -42,11 +42,9 @@ export default function ProductCard({product}: { product: any }) {
                 <button className="mt-3 w-full px-3 py-2 rounded-full bg-blue-500 text-white font-medium
                     transition-all duration-300 ease-in-out shadow-lg
                     hover:bg-blue-600 hover:shadow-xl active:scale-95
-                    backdrop-blur-lg bg-opacity-80">
+                    backdrop-blur-lg bg-opacity-80 cursor-pointer">
                     Chi tiết
                 </button>
-
-
             </div>
         </div>
     );
