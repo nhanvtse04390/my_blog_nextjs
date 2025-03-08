@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import firstBanner from '../../images/banner1.jpg';
-import secondBanner from '../../images/banner2.jpg';
-import banner3th from '../../images/banner3.jpg';
+import firstBanner from '../images/banner1.jpg';
+import secondBanner from '../images/banner2.jpg';
+import banner3th from '../images/banner3.jpg';
 
 const images = [firstBanner, secondBanner, banner3th];
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {useState} from "react";
 import {FaShoppingCart, FaUser} from "react-icons/fa";
-import leoShop from "../../images/leoShop.png";
+import leoShop from "../images/leoShop.png";
 import Image from "next/image";
 import {redirectHomePage} from "@/app/hooks/productHook";
 
@@ -46,11 +46,11 @@ const Header = () => {
 
                 {/* Navigation */}
                 <nav className="hidden md:flex items-center space-x-6 bg-white py-3 px-6 rounded-lg">
-                    <Link href="/" className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
+                    <Link href="/public" className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
                         <FaShoppingCart />
                         <span className="font-medium">Giỏ hàng</span>
                     </Link>
-                    <Link href="/" className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
+                    <Link href="/public" className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
                         <FaUser />
                         <span className="font-medium">Tài khoản</span>
                     </Link>
@@ -67,7 +67,7 @@ const Header = () => {
                 {/* Mobile Menu */}
                 {isOpen && (
                     <div className="absolute top-14 right-4 bg-white shadow-md p-4 flex flex-col space-y-3">
-                        <Link href="/" className="hover:text-blue-500">
+                        <Link href="/public" className="hover:text-blue-500">
                             Home
                         </Link>
                         <Link href="/products" className="hover:text-blue-500">

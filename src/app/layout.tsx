@@ -1,26 +1,33 @@
-import type {Metadata} from "next";
+"use client"
 import "../styles/globals.css";
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
-import FeaturedCarousel from "@/app/components/layout/Sidebar";
+import Header from "@/app/layout/Header";
+import Footer from "@/app/layout/Footer";
+import {usePathname} from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "E-commerce Site",
-  description: "A modern e-commerce website built with Next.js",
-};
-
-export default function RootLayout({  
-  children,
-}: {
-  children: React.ReactNode;
+export default function RootLayout({
+                                       children,
+                                   }: {
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className="relative">
-        <Header />
+    const hiddenPathName = ['/account/login']
+    const pathName = usePathname()
+    const isHidePath = hiddenPathName.includes(pathName)
+    if (isHidePath) {
+        return (
+            <html lang="en">
+            <body className="relative">
+            <main>{children}</main>
+            </body>
+            </html>
+        );
+    }
+    return (
+        <html lang="en">
+        <body className="relative">
+        <Header/>
         <main className="pt-16">{children}</main>
-        <Footer />
-      </body>
-    </html>
-  );
+        <Footer/>
+        </body>
+        </html>
+    );
 }

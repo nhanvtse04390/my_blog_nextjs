@@ -1,10 +1,11 @@
+"use client"
 import {useEffect, useState} from "react";
 import {getImageUrl} from "@/app/utils/getImageUrl";
 import Image from 'next/image';
-import noImage from '../images/noImage.png'
+import noImage from '../../images/noImage.png'
 import { redirect } from "next/navigation";
 
-export default function ProductCard({product}: { product: any }) {
+export default function Page({product}: { product: any }) {
     const [imageUrl, setImageUrl] = useState("");
 
     useEffect(() => {

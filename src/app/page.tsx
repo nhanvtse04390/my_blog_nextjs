@@ -1,9 +1,6 @@
-'use client';
-
-import ProductCard from "../app/components/ProductCard";
-import { getImageUrl } from "../app/utils/getImageUrl";
-import {useEffect, useState} from "react";
-import FeaturedCarousel from "@/app/components/layout/Sidebar";
+import Page from "./components/ProductCard/page";
+import FeaturedCarousel from "@/app/layout/Sidebar";
+import type {Metadata} from "next";
 
 const products = [
   {id: 1, name: "Áo thun nam", price: 250000, image: "/images/shirt.jpg"},
@@ -23,6 +20,9 @@ const products = [
   {id: 15, name: "Tai nghe Bluetooth", price: 890000, image: "/images/headphones.jpg"},
 
 ];
+export const metadata: Metadata = {
+  title: "Leo Shop",
+};
 
 export default function Home() {
   return (
@@ -31,7 +31,7 @@ export default function Home() {
       {/* Grid layout cho sản phẩm */}
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product}/>
+          <Page key={product.id} product={product}/>
         ))}
       </div>
     </div>
