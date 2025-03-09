@@ -1,6 +1,6 @@
 import FeaturedCarousel from "@/app/layout/FeaturedCarousel";
 import type {Metadata} from "next";
-import ProductCard from "./components/ProductCard/page";
+import ProductCard from "./components/ProductCard";
 
 const products = [
   {id: 0, name: "Áo thun nam", price: 250000, image: "/images/shirt.jpg"},

@@ -8,9 +8,9 @@ export default function ProductDetail() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative w-full h-96">
           {
-            product.imageUrl ? (
+            product.image ? (
               <Image
-                src={product.imageUrl}
+                src={product.image}
                 alt={product.name}
                 className="rounded-lg object-cover shadow-lg"
               />) : (
