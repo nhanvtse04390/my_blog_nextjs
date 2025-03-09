@@ -3,6 +3,7 @@ import FeaturedCarousel from "@/app/layout/FeaturedCarousel";
 import type {Metadata} from "next";
 
 const products = [
+  {id: 0, name: "Áo thun nam", price: 250000, image: "/images/shirt.jpg"},
   {id: 1, name: "Áo thun nam", price: 250000, image: "/images/shirt.jpg"},
   {id: 2, name: "Giày sneaker", price: 1200000, image: "/images/shoes.jpg"},
   {id: 3, name: "Balo thời trang", price: 550000, image: "/images/backpack.jpg"},
