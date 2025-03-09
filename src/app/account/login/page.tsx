@@ -2,7 +2,7 @@
 
 export default function Login() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-500/70 via-orange-300 to-pink-500">
             <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
                 <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
                     Đăng nhập
