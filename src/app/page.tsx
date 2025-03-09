@@ -1,6 +1,7 @@
 import Page from "./components/ProductCard/page";
 import FeaturedCarousel from "@/app/layout/FeaturedCarousel";
 import type {Metadata} from "next";
+import ProductCard from "./components/ProductCard/page";
 
 const products = [
   {id: 0, name: "Áo thun nam", price: 250000, image: "/images/shirt.jpg"},
@@ -32,7 +33,7 @@ export default function Home() {
       {/* Grid layout cho sản phẩm */}
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
         {products.map((product) => (
-          <Page key={product.id} product={product}/>
+          <ProductCard key={product.id} product={product}/>
         ))}
       </div>
     </div>

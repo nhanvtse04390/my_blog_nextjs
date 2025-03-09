@@ -6,7 +6,7 @@ import noImage from '../../images/noImage.png'
 import { redirect } from "next/navigation";
 import {Product} from "@/app/types/product";
 
-export default function Page({product}: { product: Product }) {
+export default function ProductCard({product}: { product: Product }) {
     const [imageUrl, setImageUrl] = useState("");
 
     useEffect(() => {
