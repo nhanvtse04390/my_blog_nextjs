@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky",
+    "test": "echo \"No test specified\" && exit 0",
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx}": "eslint --fix"
