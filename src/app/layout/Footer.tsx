@@ -27,7 +27,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#" className="hover:text-white">
-                  Liên hệ
+                  Liên hệ a
                 </a>
               </li>
             </ul>
