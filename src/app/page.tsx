@@ -1,4 +1,3 @@
-import Page from "./components/ProductCard/page";
 import FeaturedCarousel from "@/app/layout/FeaturedCarousel";
 import type {Metadata} from "next";
 import ProductCard from "./components/ProductCard/page";
