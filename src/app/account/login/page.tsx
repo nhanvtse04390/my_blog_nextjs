@@ -7,8 +7,8 @@ import {UserLogin} from "@/app/types/userLogin";
 export default function Login() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log("formData",formData)
         const res = await login(formData)
+        console.log("res",res)
     }
     const [formData, setFormData] = useState<UserLogin>({email: "", password:""});
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
