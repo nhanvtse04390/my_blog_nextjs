@@ -2,7 +2,6 @@ import axiosClient from '../utils/axiosConfig';
 
 export const login = async (user) => {
     try {
-        console.log("user",user)
         const response = await axiosClient.post('/api/login',user);
         return response;
     } catch (error) {

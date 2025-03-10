@@ -9,7 +9,7 @@ export default function RootLayout({
                                    }: {
     children: React.ReactNode;
 }) {
-    const hiddenPathName = ['/account/login']
+    const hiddenPathName = ['/account/login','/account/register']
     const pathName = usePathname()
     const isHidePath = hiddenPathName.includes(pathName)
     if (isHidePath) {

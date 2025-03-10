@@ -8,7 +8,7 @@ import SocialNetwork from "@/app/components/SocialNetwork";
 import LoginRightImg from "@/app/components/LoginRightImg";
 
 
-export default function Login() {
+export default function Register() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         const res = await login(formData)
@@ -27,7 +27,7 @@ export default function Login() {
             <div className="w-full flex max-w-4xl row p-8 rounded-lg shadow-md bg-gray-800/5">
                 <div className="w-full md:w-1/2 p-8 text-white">
                     <h2 className="text-2xl font-bold mb-2">
-                        Đăng nhập
+                        Đăng ký tài khoản
                     </h2>
                     <span className="mb-6">
                         *vui lòng điền đầy đủ thông tin của bạn
@@ -64,8 +64,8 @@ export default function Login() {
                         <div className="text-right">
                             <Link
                                 className="underline"
-                                href="/account/register"
-                            >*Tạo tài khoản mới</Link>
+                                href="/account/login"
+                            >*Đăng nhập</Link>
                         </div>
 
                         <button
