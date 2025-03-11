@@ -9,3 +9,13 @@ export const login = async (user) => {
         return null;
     }
 };
+
+export const register = async (user) => {
+    try {
+        const response = await axiosClient.post('/api/register',user);
+        return response;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+};
