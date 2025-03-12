@@ -14,7 +14,7 @@ export default function Login() {
         const res = await login(formData)
         console.log("res", res)
     }
-    const [formData, setFormData] = useState<UserLogin>({email: "", password: ""});
+    const [formData, setFormData] = useState<UserLogin>({email: "", password: "",});
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
