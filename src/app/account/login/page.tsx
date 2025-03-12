@@ -6,13 +6,29 @@ import {UserLogin} from "@/app/types/userLogin";
 import Link from "next/link";
 import SocialNetwork from "@/app/components/SocialNetwork";
 import LoginRightImg from "@/app/components/LoginRightImg";
-
+import {useError} from "../../components/ErrorProvider";
+import {AxiosError} from "axios";
+import {useRouter} from "next/navigation";
+import {disabledSate} from "@/app/stores/disabledSate";
+import BaseButton from "@/app/components/BaseButton";
 
 export default function Login() {
+    const {showError, showSuccess} = useError();
+    const router = useRouter();
+    const {isDisabled, setDisabled} = disabledSate();
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        const res = await login(formData)
-        console.log("res", res)
+        e.preventDefault();
+        setDisabled(true)
+        try {
+            const res = await login(formData)
+            showSuccess(res.data.message);
+            router.push("/");
+        } catch (error) {
+            const err = error as AxiosError;
+            showError(err.message);
+        } finally {
+            setDisabled(false)
+        }
     }
     const [formData, setFormData] = useState<UserLogin>({email: "", password: "",});
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,12 +84,17 @@ export default function Login() {
                             >*Tạo tài khoản mới</Link>
                         </div>
 
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition cursor-pointer mt-5 rounded-3xl"
-                        >
+                        {/*<button*/}
+                        {/*    type="submit"*/}
+                        {/*    className="w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition cursor-pointer mt-5 rounded-3xl"*/}
+                        {/*    disabled={isDisabled}*/}
+                        {/*>*/}
+                        {/*    Đăng nhập*/}
+                        {/*</button>*/}
+                        <BaseButton type="submit"
+                                    className="w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition cursor-pointer mt-5 rounded-3xl">
                             Đăng nhập
-                        </button>
+                        </BaseButton>
                         <SocialNetwork/>
                     </form>
                 </div>
