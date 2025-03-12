@@ -37,7 +37,6 @@ export default function Register() {
     resolver: zodResolver(schema),
   });
 
-  // Xử lý đăng ký
   const onSubmit = async (data: UserLogin) => {
     setLoading(true);
     try {

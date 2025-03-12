@@ -3,5 +3,5 @@ export type UserLogin = {
   password: string;
   passwordCompare: string;
   codeRef: string;
-  username: String;
+  username: string;
 };
