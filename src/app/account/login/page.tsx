@@ -92,6 +92,7 @@ export default function Login() {
                         {/*    Đăng nhập*/}
                         {/*</button>*/}
                         <BaseButton type="submit"
+                                    disabled={isDisabled}
                                     className="w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition cursor-pointer mt-5 rounded-3xl">
                             Đăng nhập
                         </BaseButton>
