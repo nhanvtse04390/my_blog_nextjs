@@ -11,6 +11,7 @@ import { useError } from "../../components/ErrorProvider";
 import {useRouter} from "next/navigation";
 import {useLoadingStore} from "@/app/stores/loadingStore";
 import {userInfo} from "@/app/types/userInfo";
+import {AxiosError} from "axios";
 
 // 🛠 Define Schema Validation với Zod
 const schema = z.object({
@@ -43,8 +44,9 @@ export default function Register() {
       const res = await registerUser(data);
       showSuccess(res.data.message)
       router.push("/account/login")
-    } catch (error: unknown) {
-      showError(error.message)
+    } catch (error) {
+      const err = error as AxiosError
+      showError(err.message)
     } finally {
       setLoading(false);
     }
