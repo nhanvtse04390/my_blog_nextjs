@@ -43,7 +43,7 @@ export default function Register() {
       const res = await registerUser(data);
       showSuccess(res.data.message)
       router.push("/account/login")
-    } catch (error) {
+    } catch (error: object) {
       showError(error.message)
     } finally {
       setLoading(false);
