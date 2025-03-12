@@ -9,7 +9,7 @@ import SocialNetwork from "@/app/components/SocialNetwork";
 import LoginRightImg from "@/app/components/LoginRightImg";
 import {useError} from "../../components/ErrorProvider";
 import {useRouter} from "next/navigation";
-import {loadingDisabledSate} from "@/app/stores/disabledSate";
+import {disabledSate} from "@/app/stores/disabledSate";
 import {userInfo} from "@/app/types/userInfo";
 import {AxiosError} from "axios";
 
@@ -28,7 +28,7 @@ const schema = z.object({
 export default function Register() {
     const {showError, showSuccess} = useError();
     const router = useRouter();
-    const {isDisabled, setDisabled} = loadingDisabledSate();
+    const {isDisabled, setDisabled} = disabledSate();
 
     const {
         register,
