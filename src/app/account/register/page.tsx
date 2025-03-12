@@ -38,7 +38,7 @@ export default function Register() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data: userInfo) => {
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
       const res = await registerUser(data);
