@@ -6,7 +6,6 @@ export const fetchData = async () => {
     const response = await axiosClient.get('/api/users');
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
+    return error;
   }
 };  

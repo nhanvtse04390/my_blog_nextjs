@@ -3,6 +3,8 @@ import "../styles/globals.css";
 import Header from "@/app/layout/Header";
 import Footer from "@/app/layout/Footer";
 import {usePathname} from "next/navigation";
+import {ToastContainer} from "react-toastify";
+import { ErrorProvider } from "../app/components/ErrorProvider";
 
 export default function RootLayout({
                                        children,
@@ -16,7 +18,12 @@ export default function RootLayout({
         return (
             <html lang="en">
             <body className="relative">
-            <main>{children}</main>
+            <main>
+                <ErrorProvider>
+                    <ToastContainer />
+                    {children}
+                </ErrorProvider>
+            </main>
             </body>
             </html>
         );
@@ -25,7 +32,12 @@ export default function RootLayout({
         <html lang="en">
         <body className="relative">
         <Header/>
-        <main className="pt-16">{children}</main>
+        <main className="pt-16">
+            <ErrorProvider>
+                <ToastContainer />
+                {children}
+            </ErrorProvider>
+        </main>
         <Footer/>
         </body>
         </html>
