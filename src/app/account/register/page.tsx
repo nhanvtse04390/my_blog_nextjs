@@ -10,6 +10,7 @@ import LoginRightImg from "@/app/components/LoginRightImg";
 import { useError } from "../../components/ErrorProvider";
 import {useRouter} from "next/navigation";
 import {useLoadingStore} from "@/app/stores/loadingStore";
+import {userInfo} from "@/app/types/userInfo";
 import {AxiosError} from "axios";
 
 // 🛠 Define Schema Validation với Zod
@@ -37,7 +38,7 @@ export default function Register() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: userInfo) => {
     setLoading(true);
     try {
       const res = await registerUser(data);
