@@ -12,6 +12,8 @@ export default function ProductDetail() {
               <Image
                 src={product.image}
                 alt={product.name}
+                width={300}
+                height={300}
                 className="rounded-lg object-cover shadow-lg"
               />) : (
               <Image
