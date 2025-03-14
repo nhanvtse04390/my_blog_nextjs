@@ -7,49 +7,74 @@ import {useRouter} from "next/navigation";
 import {Product} from "@/app/types/product";
 
 export default function ProductCard({product}: { product: Product }) {
-    const [image, setImageUrl] = useState("");
-    const router = useRouter()
+  const [image, setImageUrl] = useState("");
+  const router = useRouter()
 
-    useEffect(() => {
-        async function fetchImage() {
-            const number = Math.floor(Math.random() * 6) + 1
-            const url = await getImageUrl(`images/${number}.jpg`);
-            setImageUrl(url);
-        }
-
-        fetchImage();
-    }, []);
-    const handleRedirect = () => {
-        router.push("/product");
-        return null;
+  useEffect(() => {
+    async function fetchImage() {
+      const number = Math.floor(Math.random() * 6) + 1
+      const url = await getImageUrl(`images/${number}.jpg`);
+      setImageUrl(url);
     }
-    return (
-        <div onClick={handleRedirect}
-             className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition flex justify-between cursor-pointer">
-            <div className="mb-auto">
-                <h3 className="font-bold over-flow:hidden">{product.name}</h3>
-                <p className="font-bold mt-1">{product.price} ₫</p>
-                <p className="mt-1">{product.description}</p>
+
+    fetchImage();
+  }, []);
+  const handleRedirect = () => {
+    router.push("/product");
+    return null;
+  }
+  return (
+    <div
+      onClick={handleRedirect}
+      className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition flex justify-between cursor-pointer"
+    >
+      <div className="flex-1">
+        {/* Tên sản phẩm */}
+        <h3 className="font-bold truncate">{product.name}</h3>
+
+        {/* Giá và giảm giá */}
+        {product.discount ? (
+          <div>
+        <span className="rounded-md px-1 bg-green-50 border border-green-300 text-green-500 mr-1">
+          Mới
+        </span>
+            <span className="rounded-md px-1 bg-orange-50 border border-orange-300 text-orange-500">
+          Giảm {product.discount}%
+        </span>
+            <div className="mt-1">
+          <span className="font-bold text-lg font-bold mr-2">
+            {(product.price - (product.price * product.discount) / 100).toLocaleString("vi-VN")}₫
+          </span>
+              <s className="font-semibold text-red-500">{product.price.toLocaleString("vi-VN")} ₫</s>
             </div>
-            <div className="h-[170px]">
-                {image ? (
-                    <Image
-                        src={image}
-                        alt="Hình ảnh"
-                        width={280}
-                        height={280}
-                        style={{width: "150px", height: "150px"}}
-                        className="rounded-xl"
-                    />
-                ) : (
-                    <Image
-                        src={noImage}
-                        alt="Ảnh tạm"
-                        width={280}
-                        height={280}
-                    />
-                )}
-            </div>
-        </div>
-    );
+          </div>
+        ) : (
+          <div>
+        <span className="rounded-md px-1 bg-green-50 border border-green-300 text-green-500 mr-1">
+          Mới
+        </span>
+            <p className="font-bold mt-1">{product.price.toLocaleString("vi-VN")} ₫</p>
+          </div>
+        )}
+
+        {/* Mô tả sản phẩm */}
+        <p className="mt-1 text-gray-600 line-clamp-3">
+          {product.description}
+        </p>
+      </div>
+
+      {/* Hình ảnh sản phẩm */}
+      <div className="h-[170px] w-[170px] flex items-center">
+        <Image
+          src={image || noImage}
+          alt="Hình ảnh sản phẩm"
+          width={150}
+          height={150}
+          style={{width: "170px", height: "170px"}}
+          className="rounded-xl object-cover"
+        />
+      </div>
+    </div>
+
+  );
 }

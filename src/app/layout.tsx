@@ -31,14 +31,12 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className="relative">
-        <Header/>
-        <main className="pt-16">
+        <main>
             <ErrorProvider>
                 <ToastContainer />
                 {children}
             </ErrorProvider>
         </main>
-        <Footer/>
         </body>
         </html>
     );

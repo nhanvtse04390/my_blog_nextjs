@@ -5,3 +5,16 @@ body {
     @apply bg-gray-100;
     font-family: Misans Latin, sans-serif;
 }
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
