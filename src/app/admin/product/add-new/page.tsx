@@ -6,6 +6,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
 import {addNewProduct} from "@/app/api/product";
+import Image from "next/image";
 
 export default function AddProductPage() {
     const {showError, showSuccess} = useError();
