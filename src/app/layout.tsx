@@ -1,7 +1,5 @@
 "use client"
 import "../styles/globals.css";
-import Header from "@/app/layout/Header";
-import Footer from "@/app/layout/Footer";
 import {usePathname} from "next/navigation";
 import {ToastContainer} from "react-toastify";
 import { ErrorProvider } from "../app/components/ErrorProvider";

@@ -1,18 +1,18 @@
-"use client"
-import {useRouter} from "next/navigation";
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-interface info {
-  isAdmin: boolean;
-}
+export default function Home() {
+  const router = useRouter();
 
-export default function Home(info) {
-  const router = useRouter()
-  if (info.isAdmin) {
-    router.push("/shop")
-  } else {
-    router.push("/admin")
-  }
-  return (
-    <></>
-  );
+  useEffect(() => {
+    const info = JSON.parse(localStorage.getItem("info"));
+    if (info?.isAdmin) {
+      router.push("/admin");
+    } else {
+      router.push("/shop");
+    }
+  }, [router]);
+
+  return null;
 }
