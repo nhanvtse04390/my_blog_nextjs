@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { X } from "lucide-react"; // Import icon
+import { X } from "lucide-react";
+import {redirectHomePage} from "@/app/hooks/productHook"; // Import icon
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -17,9 +18,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       >
         {/* Sidebar Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold">Admin Panel</h2>
+          <div
+              className="flex items-center justify-center text-2xl font-bold text-gray-900 uppercase tracking-wide rounded-lg cursor-pointer">
+            <span className="text-red-500">Leo</span> <span className="text-white">Shop</span>
+          </div>
           <button className="md:hidden" onClick={() => setIsSidebarOpen(false)}>
-            <X size={24} />
+            <X size={24}/>
           </button>
         </div>
 
@@ -28,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/dashboard" className="sidebar-link">
             📊 Dashboard
           </Link>
-          <Link href="/admin/products" className="sidebar-link">
+          <Link href="/admin/product/list" className="sidebar-link">
             🛍 Sản phẩm
           </Link>
           <Link href="/admin/orders" className="sidebar-link">
