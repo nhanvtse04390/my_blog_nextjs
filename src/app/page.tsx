@@ -6,8 +6,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const info = JSON.parse(localStorage.getItem("info"));
-    if (info?.isAdmin) {
+    const info = JSON.parse(localStorage.getItem("info")) || "{}";
+    if (info.isAdmin) {
       router.push("/admin");
     } else {
       router.push("/shop");
