@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { storage } from "../../../utils/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import axios, {AxiosError} from "axios";
+import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
 import {addNewProduct} from "@/app/api/product";
 
@@ -132,7 +132,17 @@ export default function AddProductPage() {
                 {/* Ảnh sản phẩm */}
                 <div className="border p-3 rounded">
                     <input type="file" accept="image/*" onChange={handleFileChange} required />
-                    {preview && <img src={preview} alt="Preview" className="mt-3 w-32 h-32 object-cover rounded" />}
+                    {preview && (
+                        <div className="relative mt-3 w-32 h-32">
+                            <Image
+                                src={preview}
+                                alt="Preview"
+                                layout="fill"
+                                objectFit="cover"
+                                className="rounded"
+                            />
+                        </div>
+                    )}
                 </div>
 
                 {/* Nút Submit */}

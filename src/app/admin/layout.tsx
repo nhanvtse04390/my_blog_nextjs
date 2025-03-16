@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
-import {redirectHomePage} from "@/app/hooks/productHook"; // Import icon
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
