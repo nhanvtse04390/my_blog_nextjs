@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {getProduct} from "@/app/api/product";
 import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
+import {Product} from "@/app/types/product";
 import BaseButton from "@/app/components/BaseButton";
 import {useRouter} from "next/navigation";
 import BaseTable from "@/app/components/BaseTable";
@@ -17,7 +18,7 @@ export type PARAMS = {
 const ListProduct: React.FC = () => {
   const {showError} = useError();
   const router = useRouter()
-  const [rows, setRows] = useState();
+  const [rows, setRows] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
@@ -26,27 +27,22 @@ const ListProduct: React.FC = () => {
     {
       label: 'Tên sản phẩm',
       value: 'name',
-      isImage: false
     },
     {
       label: 'Giá',
       value: 'price',
-      isImage: false
     },
     {
       label: 'Mô tả',
       value: 'description',
-      isImage: false
     },
     {
       label: 'Giảm giá',
       value: 'discount',
-      isImage: false
     },
     {
       label: 'Hình ảnh',
       value: 'image',
-      isImage: true
     },
   ]
 
