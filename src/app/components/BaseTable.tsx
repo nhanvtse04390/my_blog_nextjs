@@ -36,7 +36,7 @@ const BaseTable = <T, >({headers, rows}: BaseTableProps<T>) => {
                         <TableRow key={rowIndex}>
                             {headers.map((header, headerIndex) => (
                                 <TableCell key={headerIndex}>
-                                    {row[header.value]}
+                                    {row[header.value] !== undefined ? String(row[header.value]) : "-"}
                                 </TableCell>
                             ))}
                         </TableRow>
