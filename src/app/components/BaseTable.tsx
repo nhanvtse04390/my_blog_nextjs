@@ -8,8 +8,21 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Image from "next/image";
 import BaseButton from "@/app/components/BaseButton";
+import {Product} from "@/app/types/product";
 
-const BaseTable = ({rows, headers}) => {
+export type Header = {
+  label: string;
+  value: string;
+  isImage?: boolean;
+  isAction?: boolean;
+}
+
+export type BaseTableProps = {
+  headers: Header[];
+  rows: Product[];
+}
+
+const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
   return (
     <TableContainer
       component={Paper}
