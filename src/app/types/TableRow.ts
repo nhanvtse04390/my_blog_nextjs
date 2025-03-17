@@ -1,5 +1,5 @@
 export type Row = {
     label?: string,
-    value: string,
+    value?: string,
     isImage?: boolean
 }

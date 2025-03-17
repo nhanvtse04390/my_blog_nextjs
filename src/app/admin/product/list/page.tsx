@@ -27,18 +27,22 @@ const ListProduct: React.FC = () => {
     {
       label: 'Tên sản phẩm',
       value: 'name',
+      isImage: false
     },
     {
       label: 'Giá',
       value: 'price',
+      isImage: false
     },
     {
       label: 'Mô tả',
       value: 'description',
+      isImage: false
     },
     {
       label: 'Giảm giá',
       value: 'discount',
+      isImage: false
     },
     {
       label: 'Hình ảnh',
