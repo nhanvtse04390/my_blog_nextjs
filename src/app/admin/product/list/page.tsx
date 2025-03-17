@@ -45,11 +45,6 @@ const ListProduct: React.FC = () => {
       value: 'image',
       isImage: true
     },
-    {
-      label: '',
-      value: [{label: 'Sửa', value: 'edit'},{label: 'X', value: 'x'}],
-      isAction: true,
-    },
   ]
 
   const handleAddNew = () => {
