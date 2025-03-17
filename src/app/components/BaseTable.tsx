@@ -6,10 +6,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
+import Image from "next/image";
+import noImage from '../images/noImage.png'
 
 export type Header<T> = {
     label: string;
-    value: keyof T; // Chỉ định value là key của T
+    value: keyof T;  // ✅ Đảm bảo value là key của T
     isImage?: boolean;
 };
 
@@ -37,10 +39,11 @@ const BaseTable = <T,>({ headers, rows }: BaseTableProps<T>) => {
                             {headers.map((header, headerIndex) => (
                                 <TableCell key={headerIndex}>
                                     {header.isImage ? (
-                                        <img
-                                            src={row[header.value] as string}
+                                        <Image
+                                            src={row[header.value] ? (row[header.value] as string) : noImage}
                                             alt="Preview"
-                                            style={{ width: "50px", height: "50px" }}
+                                            width={50}
+                                            height={50}
                                         />
                                     ) : (
                                         String(row[header.value])
