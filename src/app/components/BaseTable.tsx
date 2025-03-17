@@ -20,12 +20,12 @@ export type Header = {
 export type BaseTableProps =  {
   headers: Header[];
   rows: Product[];
+  page?: number;
 }
 export type Action =  {
   label: string;
   value: string;
 }
-
 
 const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
   return (
