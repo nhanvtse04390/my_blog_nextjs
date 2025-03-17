@@ -7,20 +7,15 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Image from "next/image";
-import { Product } from "@/app/types/product";
-
-export type Header = {
-  label: string;
-  value: keyof Product; // ✅ Chỉ nhận key hợp lệ từ Product
-  isImage?: boolean;
-};
+import {Product} from "@/app/types/product";
+import {Header} from "@/app/types/TableHeader";
 
 export type BaseTableProps = {
   headers: Header[];
   rows: Product[];
 };
 
-const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
+const BaseTable: React.FC<BaseTableProps> = ({headers, rows}) => {
   return (
     <TableContainer
       component={Paper}
@@ -34,7 +29,7 @@ const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
         <TableHead>
           <TableRow>
             {headers.map((header, index) => (
-              <TableCell key={index} sx={{ fontWeight: "bold" }}>
+              <TableCell key={index} sx={{fontWeight: "bold"}}>
                 {header.label}
               </TableCell>
             ))}
