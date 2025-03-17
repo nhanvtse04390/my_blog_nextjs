@@ -6,6 +6,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
+import noImage from "@/app/images/noImage.png";
+import Image from "next/image";
 
 export type Header<T> = {
     label: string;
@@ -36,7 +38,21 @@ const BaseTable = <T, >({headers, rows}: BaseTableProps<T>) => {
                         <TableRow key={rowIndex}>
                             {headers.map((header, headerIndex) => (
                                 <TableCell key={headerIndex}>
-                                    {row[header.value] !== undefined ? String(row[header.value]) : "-"}
+                                    {header.isImage ? (
+                                        <div>
+                                            <Image
+                                                src={typeof row[header.value] === "string" ? row[header.value] : noImage}
+                                                alt="Preview"
+                                                className="rounded"
+                                                width={50}
+                                                height={50}
+                                            />
+                                        </div>
+                                    ) : row[header.value] !== undefined ? (
+                                        String(row[header.value])
+                                    ) : (
+                                        "-"
+                                    )}
                                 </TableCell>
                             ))}
                         </TableRow>

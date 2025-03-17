@@ -42,7 +42,8 @@ const ListProduct: React.FC = () => {
     },
     {
       label: 'Hình ảnh',
-      value: 'image' as keyof Product
+      value: 'image' as keyof Product,
+      isImage: true,
     },
   ]
 
