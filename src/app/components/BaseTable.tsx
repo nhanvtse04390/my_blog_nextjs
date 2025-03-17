@@ -12,15 +12,20 @@ import {Product} from "@/app/types/product";
 
 export type Header = {
   label: string;
-  value: string;
+  value: string | Action[];
   isImage?: boolean;
   isAction?: boolean;
 }
 
-export type BaseTableProps = {
+export type BaseTableProps =  {
   headers: Header[];
   rows: Product[];
 }
+export type Action =  {
+  label: string;
+  value: string;
+}
+
 
 const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
   return (
