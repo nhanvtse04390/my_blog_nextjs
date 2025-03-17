@@ -56,7 +56,7 @@ const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
                     row[header.value] ? ( // Kiểm tra nếu có ảnh
                       <div className="relative mt-3 w-32 h-32">
                         <Image
-                          src={row[header.value] || "/default-image.jpg"} // Dùng ảnh mặc định nếu không có
+                          src={row[header.value] as string} // Dùng ảnh mặc định nếu không có
                           alt="Preview"
                           layout="fill"
                           objectFit="cover"
