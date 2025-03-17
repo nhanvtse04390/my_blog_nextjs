@@ -26,23 +26,23 @@ const ListProduct: React.FC = () => {
   const headerTable = [
     {
       label: 'Tên sản phẩm',
-      value: 'name',
+      value: 'name' as keyof Product
     },
     {
       label: 'Giá',
-      value: 'price',
+      value: 'price' as keyof Product
     },
     {
       label: 'Mô tả',
-      value: 'description',
+      value: 'description' as keyof Product
     },
     {
       label: 'Giảm giá',
-      value: 'discount',
+      value: 'discount' as keyof Product
     },
     {
       label: 'Hình ảnh',
-      value: 'image',
+      value: 'image' as keyof Product
     },
   ]
 
