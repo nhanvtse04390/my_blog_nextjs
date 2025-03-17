@@ -6,8 +6,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import Image from "next/image";
-import noImage from '../images/noImage.png'
 
 export type Header<T> = {
     label: string;
@@ -37,7 +35,7 @@ const BaseTable = <T, >({headers, rows}: BaseTableProps<T>) => {
                     {rows.map((row, rowIndex) => (
                         <TableRow key={rowIndex}>
                             {headers.map((header, headerIndex) => (
-                                <TableCell>
+                                <TableCell key={headerIndex}>
                                     {row[header.value]}
                                 </TableCell>
                             ))}
