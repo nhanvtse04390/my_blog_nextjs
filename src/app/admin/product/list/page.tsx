@@ -18,7 +18,7 @@ export type PARAMS = {
 const ListProduct: React.FC = () => {
   const {showError} = useError();
   const router = useRouter()
-  const [rows, setRows] = useState<Product[]>([]);
+  const [rows, setRows] = useState<>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
