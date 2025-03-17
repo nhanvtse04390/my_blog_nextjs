@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {getProduct} from "@/app/api/product";
 import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
-import {Product} from "@/app/types/product";
 import BaseButton from "@/app/components/BaseButton";
 import {useRouter} from "next/navigation";
 import BaseTable from "@/app/components/BaseTable";
