@@ -54,7 +54,7 @@ const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
                 <TableCell key={headerIndex}>
                   {header.isImage ? (
                     typeof header.value === "string" ? (
-                      row[header.value] ? (
+                      row[header.value] as keyof Product ? (
                         <div className="relative mt-3 w-32 h-32">
                           <Image
                             src={row[header.value] as string} // ✅ Ép kiểu
