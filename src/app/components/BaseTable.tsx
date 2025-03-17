@@ -20,14 +20,14 @@ export type BaseTableProps<T> = {
     rows: T[];
 };
 
-const BaseTable = <T,>({ headers, rows }: BaseTableProps<T>) => {
+const BaseTable = <T, >({headers, rows}: BaseTableProps<T>) => {
     return (
-        <TableContainer component={Paper} sx={{ border: "1px solid #ddd" }}>
+        <TableContainer component={Paper} sx={{border: "1px solid #ddd"}}>
             <Table>
                 <TableHead>
                     <TableRow>
                         {headers.map((header, index) => (
-                            <TableCell key={index} sx={{ fontWeight: "bold" }}>
+                            <TableCell key={index} sx={{fontWeight: "bold"}}>
                                 {header.label}
                             </TableCell>
                         ))}
@@ -37,17 +37,8 @@ const BaseTable = <T,>({ headers, rows }: BaseTableProps<T>) => {
                     {rows.map((row, rowIndex) => (
                         <TableRow key={rowIndex}>
                             {headers.map((header, headerIndex) => (
-                                <TableCell key={headerIndex}>
-                                    {header.isImage ? (
-                                        <Image
-                                            src={row[header.value] ? (row[header.value] as string) : noImage}
-                                            alt="Preview"
-                                            width={50}
-                                            height={50}
-                                        />
-                                    ) : (
-                                        row[header.value]
-                                    )}
+                                <TableCell>
+                                    {row[header.value]}
                                 </TableCell>
                             ))}
                         </TableRow>
