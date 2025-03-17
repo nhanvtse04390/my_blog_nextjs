@@ -41,7 +41,7 @@ const BaseTable = <T, >({headers, rows}: BaseTableProps<T>) => {
                                     {header.isImage ? (
                                         <div>
                                             <Image
-                                                src={typeof row[header.value] === "string" ? row[header.value] : noImage}
+                                                src={typeof row[header.value] === "string" ? (row[header.value] as string) : noImage}
                                                 alt="Preview"
                                                 className="rounded"
                                                 width={50}
