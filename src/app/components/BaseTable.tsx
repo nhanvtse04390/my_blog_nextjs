@@ -53,30 +53,32 @@ const BaseTable: React.FC<BaseTableProps> = ({ headers, rows }) => {
               {headers.map((header, headerIndex) => (
                 <TableCell key={headerIndex}>
                   {header.isImage ? (
-                    row[header.value] ? ( // Kiểm tra nếu có ảnh
-                      <div className="relative mt-3 w-32 h-32">
-                        <Image
-                          src={row[header.value] as string} // Dùng ảnh mặc định nếu không có
-                          alt="Preview"
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded"
-                        />
-                      </div>
+                    typeof header.value === "string" ? (
+                      row[header.value] ? (
+                        <div className="relative mt-3 w-32 h-32">
+                          <Image
+                            src={row[header.value] as string} // ✅ Ép kiểu
+                            alt="Preview"
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded"
+                          />
+                        </div>
+                      ) : null
                     ) : null
                   ) : header.isAction ? (
-                    Array.isArray(header.value) ? (
-                      header.value.map((action, actionIndex) => (
-                        <BaseButton
-                          key={actionIndex}
-                          className="bg-blue-500 text-white py-2 hover:bg-blue-600 transition cursor-pointer mt-5 rounded-lg mr-1"
-                        >
-                          {action.label}
-                        </BaseButton>
-                      ))
-                    ) : null
-                  ) : (
+                    (header.value as Action[]).map((action, actionIndex) => (
+                      <BaseButton
+                        key={actionIndex}
+                        className="bg-blue-500 text-white py-2 hover:bg-blue-600 rounded-3xl"
+                      >
+                        {action.label}
+                      </BaseButton>
+                    ))
+                  ) : typeof header.value === "string" ? (
                     row[header.value] || ""
+                  ) : (
+                    ""
                   )}
                 </TableCell>
               ))}
