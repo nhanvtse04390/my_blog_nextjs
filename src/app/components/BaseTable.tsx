@@ -46,7 +46,7 @@ const BaseTable = <T,>({ headers, rows }: BaseTableProps<T>) => {
                                             height={50}
                                         />
                                     ) : (
-                                        String(row[header.value])
+                                        row[header.value]
                                     )}
                                 </TableCell>
                             ))}
