@@ -81,7 +81,7 @@ const ListProduct: React.FC = () => {
   return (
     <>
       <BaseButton onClick={handleAddNew} className="mb-1">Thêm sản phẩm</BaseButton>
-      <BaseTable rows={rows} rowsPerPageProp={rowsPerPage} page={page} headers={headerTable}/>
+      <BaseTable rows={rows} page={page} headers={headerTable}/>
       <Pagination
         count={Math.ceil(totalItems / rowsPerPage)}
         page={page}
