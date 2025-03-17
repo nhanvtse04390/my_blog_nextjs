@@ -28,8 +28,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Navigation */}
         <nav className="flex flex-col gap-4">
-          <Link href="/admin/dashboard" className="sidebar-link">
-            📊 Dashboard
+          <Link href="/shop" className="sidebar-link">
+            📊 Shop
           </Link>
           <Link href="/admin/product/list" className="sidebar-link">
             🛍 Sản phẩm

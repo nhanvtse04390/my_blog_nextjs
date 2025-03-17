@@ -8,3 +8,12 @@ export const addNewProduct = async (Product) => {
         throw error;
     }
 };
+
+export const getProduct = async ({page,rowsPerPage}) => {
+    try {
+        const response = await axiosClient.get(`/api/product/list?page=${page}&limit=${rowsPerPage}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};

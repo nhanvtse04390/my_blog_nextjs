@@ -132,7 +132,7 @@ export default function AddProductPage() {
 
                 {/* Ảnh sản phẩm */}
                 <div className="border p-3 rounded">
-                    <input type="file" accept="image/*" onChange={handleFileChange} required />
+                    <input type="file" accept="image/*" onChange={handleFileChange} />
                     {preview && (
                         <div className="relative mt-3 w-32 h-32">
                             <Image
@@ -149,7 +149,7 @@ export default function AddProductPage() {
                 {/* Nút Submit */}
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700"
+                    className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 cursor-pointer"
                     disabled={loading}
                 >
                     {loading ? "Đang thêm..." : "Thêm sản phẩm"}
