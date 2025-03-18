@@ -34,8 +34,6 @@ export default function AddProductPage() {
     }
   };
   const handleRemoveImage = (index: number) => {
-    console.log("Removing image at index:", index);
-
     setPreviews((prev) => {
       if (!prev) return prev; // Kiểm tra nếu `prev` là null
       const updatedPreviews = [...prev]; // Sao chép mảng cũ
@@ -68,23 +66,27 @@ export default function AddProductPage() {
 
 
   // Xử lý tải ảnh lên Firebase
-  const uploadImage = async () => {
-    if (!images.length) return null;
+  const uploadImages = async () => {
+    if (!images.length) return [];
 
-    const storageRef = ref(storage, `products/${images[0].name}`);
-    const uploadTask = uploadBytesResumable(storageRef, images[0]);
+    const uploadTasks = images.map((image) => {
+      const storageRef = ref(storage, `products/${image.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
-    return new Promise<string>((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        null,
-        (error) => reject(error),
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          resolve(downloadURL);
-        }
-      );
+      return new Promise<string>((resolve, reject) => {
+        uploadTask.on(
+          "state_changed",
+          null,
+          (error) => reject(error),
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve(downloadURL);
+          }
+        );
+      });
     });
+
+    return Promise.all(uploadTasks); // Chờ tất cả ảnh tải lên xong
   };
 
   // Xử lý submit form
@@ -93,16 +95,17 @@ export default function AddProductPage() {
     setLoading(true);
 
     try {
-      const imageUrl = await uploadImage();
+      const imageUrls = await uploadImages();
 
       const productData = {
         ...formData,
         price: Number(formData.price),
         discount: formData.discount ? Number(formData.discount) : undefined,
-        image: imageUrl,
+        image: imageUrls,
       };
 
-      // Gửi dữ liệu lên backend
+
+      //Gửi dữ liệu lên backend
       const res = await addNewProduct(productData);
       showSuccess(res.data.message)
       setFormData({name: "", price: "", description: "", discount: ""});

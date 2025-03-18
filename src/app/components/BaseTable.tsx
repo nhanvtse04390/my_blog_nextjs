@@ -55,7 +55,13 @@ const BaseTable = <T, >({ headers, rows }: BaseTableProps<T>) => {
                                 header.renderCell(row)
                               ) : header.isImage ? (
                                 <Image
-                                  src={typeof row[header.value!] === "string" ? (row[header.value!] as string) : noImage}
+                                  src={
+                                      Array.isArray(row[header.value!]) && row[header.value!].length > 0
+                                        ? row[header.value!][0] // Lấy phần tử đầu tiên của mảng
+                                        : typeof row[header.value!] === "string"
+                                          ? row[header.value!]
+                                          : noImage
+                                  }
                                   alt="Preview"
                                   className="rounded"
                                   width={50}
@@ -67,6 +73,7 @@ const BaseTable = <T, >({ headers, rows }: BaseTableProps<T>) => {
                                 "-"
                               )}
                           </TableCell>
+
                         ))}
                     </TableRow>
                   ))}
