@@ -44,11 +44,11 @@ const BaseTable = <T, >({ headers, rows }: BaseTableProps<T>) => {
                           <TableCell
                             key={headerIndex}
                             sx={{
-                                minWidth: "150px", // Đảm bảo mỗi ô có độ rộng tối thiểu
-                                whiteSpace: "nowrap", // Ngăn xuống dòng
-                                overflow: "hidden", // Ẩn nội dung dư
-                                textOverflow: "ellipsis", // Hiển thị dấu "..."
-                                maxWidth: "200px", // Giới hạn chiều rộng tối đa
+                                minWidth: "150px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                maxWidth: "200px",
                             }}
                           >
                               {header.renderCell ? (
@@ -56,10 +56,10 @@ const BaseTable = <T, >({ headers, rows }: BaseTableProps<T>) => {
                               ) : header.isImage ? (
                                 <Image
                                   src={
-                                      Array.isArray(row[header.value!]) && row[header.value!].length > 0
-                                        ? row[header.value!][0] // Lấy phần tử đầu tiên của mảng
+                                      Array.isArray(row[header.value!]) && (row[header.value!] as string[]).length > 0
+                                        ? (row[header.value!] as string[])[0] // Ép kiểu về string[]
                                         : typeof row[header.value!] === "string"
-                                          ? row[header.value!]
+                                          ? (row[header.value!] as string)
                                           : noImage
                                   }
                                   alt="Preview"
