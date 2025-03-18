@@ -1,160 +1,229 @@
 "use client";
 
-import { useState } from "react";
-import { storage } from "../../../utils/firebaseConfig";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {useState} from "react";
+import {storage} from "../../../utils/firebaseConfig";
+import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
 import {addNewProduct} from "@/app/api/product";
 import Image from "next/image";
 
 export default function AddProductPage() {
-    const {showError, showSuccess} = useError();
-    const [formData, setFormData] = useState({
-        name: "",
-        price: "",
-        description: "",
-        discount: "",
+  const {showError, showSuccess} = useError();
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    description: "",
+    discount: "",
+  });
+  const [images, setImages] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[] | null>([]);
+  const [loading, setLoading] = useState(false);
+
+  // Xử lý thay đổi form
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
+
+  // Xử lý chọn ảnh
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      setImages(files);
+      setPreviews(files.map(file => URL.createObjectURL(file))); // Xem trước nhiều ảnh
+    }
+  };
+  const handleRemoveImage = (index: number) => {
+    console.log("Removing image at index:", index);
+
+    setPreviews((prev) => {
+      const updatedPreviews = [...prev];
+      if (updatedPreviews[index]) {
+        URL.revokeObjectURL(updatedPreviews[index]); // Giải phóng URL blob
+      }
+      updatedPreviews.splice(index, 1); // Xóa phần tử khỏi mảng
+      return updatedPreviews;
     });
-    const [image, setImage] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
 
-    // Xử lý thay đổi form
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+    setImages((prev) => {
+      const updatedImages = [...prev];
+      updatedImages.splice(index, 1); // Xóa phần tử khỏi mảng
+      return updatedImages;
+    });
 
-    // Xử lý chọn ảnh
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            setImage(file);
-            setPreview(URL.createObjectURL(file)); // Xem trước ảnh
+    // Xóa giá trị input file
+    const fileInput = document.querySelector("input[type='file']") as HTMLInputElement;
+    if (fileInput && fileInput.files) {
+      const dataTransfer = new DataTransfer(); // Tạo một danh sách file mới
+      Array.from(fileInput.files)
+        .filter((_, i) => i !== index) // Chỉ giữ lại file không bị xóa
+        .forEach((file) => dataTransfer.items.add(file));
+
+      fileInput.files = dataTransfer.files; // Gán danh sách file mới vào input
+    }
+  };
+
+
+  // Xử lý tải ảnh lên Firebase
+  const uploadImage = async () => {
+    if (!images.length) return null;
+
+    const storageRef = ref(storage, `products/${images[0].name}`);
+    const uploadTask = uploadBytesResumable(storageRef, images[0]);
+
+    return new Promise<string>((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        null,
+        (error) => reject(error),
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          resolve(downloadURL);
         }
-    };
+      );
+    });
+  };
 
-    // Xử lý tải ảnh lên Firebase
-    const uploadImage = async () => {
-        if (!image) return null;
+  // Xử lý submit form
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
 
-        const storageRef = ref(storage, `products/${image.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, image);
+    try {
+      const imageUrl = await uploadImage();
 
-        return new Promise<string>((resolve, reject) => {
-            uploadTask.on(
-                "state_changed",
-                null,
-                (error) => reject(error),
-                async () => {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    resolve(downloadURL);
-                }
-            );
-        });
-    };
+      const productData = {
+        ...formData,
+        price: Number(formData.price),
+        discount: formData.discount ? Number(formData.discount) : undefined,
+        image: imageUrl,
+      };
 
-    // Xử lý submit form
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+      // Gửi dữ liệu lên backend
+      const res = await addNewProduct(productData);
+      showSuccess(res.data.message)
+      setFormData({name: "", price: "", description: "", discount: ""});
+      setImages([]);
+      setPreviews([]);
+    } catch (error) {
+      const err = error as AxiosError
+      showError(err.message)
+    }
 
-        try {
-            const imageUrl = await uploadImage();
+    setLoading(false);
+  };
 
-            const productData = {
-                ...formData,
-                price: Number(formData.price),
-                discount: formData.discount ? Number(formData.discount) : undefined,
-                image: imageUrl,
-            };
+  return (
+    <div className="max-w-3xl mx-auto p-8 bg-white shadow-xl rounded-lg">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Thêm sản phẩm mới</h2>
 
-            // Gửi dữ liệu lên backend
-            const res = await addNewProduct(productData);
-            showSuccess(res.data.message)
-            setFormData({ name: "", price: "", description: "", discount: "" });
-            setImage(null);
-            setPreview(null);
-        } catch (error) {
-            const err = error as AxiosError
-            showError(err.message)
-        }
-
-        setLoading(false);
-    };
-
-    return (
-        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Thêm sản phẩm mới</h2>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Tên sản phẩm */}
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Tên sản phẩm"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full border p-2 rounded"
-                />
-
-                {/* Giá */}
-                <input
-                    type="number"
-                    name="price"
-                    placeholder="Giá sản phẩm"
-                    value={formData.price}
-                    onChange={handleChange}
-                    required
-                    className="w-full border p-2 rounded"
-                />
-
-                {/* Giảm giá (nếu có) */}
-                <input
-                    type="number"
-                    name="discount"
-                    placeholder="Giảm giá (%)"
-                    value={formData.discount}
-                    onChange={handleChange}
-                    className="w-full border p-2 rounded"
-                />
-
-                {/* Mô tả sản phẩm */}
-                <textarea
-                    name="description"
-                    placeholder="Mô tả sản phẩm"
-                    value={formData.description}
-                    onChange={handleChange}
-                    required
-                    className="w-full border p-2 rounded"
-                />
-
-                {/* Ảnh sản phẩm */}
-                <div className="border p-3 rounded">
-                    <input type="file" accept="image/*" onChange={handleFileChange} />
-                    {preview && (
-                        <div className="relative mt-3 w-32 h-32">
-                            <Image
-                                src={preview}
-                                alt="Preview"
-                                layout="fill"
-                                objectFit="cover"
-                                className="rounded"
-                            />
-                        </div>
-                    )}
-                </div>
-
-                {/* Nút Submit */}
-                <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 cursor-pointer"
-                    disabled={loading}
-                >
-                    {loading ? "Đang thêm..." : "Thêm sản phẩm"}
-                </button>
-            </form>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Tên sản phẩm */}
+        <div>
+          <label className="block text-gray-700 font-medium">Tên sản phẩm</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Nhập tên sản phẩm..."
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
-    );
+
+        {/* Giá */}
+        <div>
+          <label className="block text-gray-700 font-medium">Giá sản phẩm</label>
+          <input
+            type="number"
+            name="price"
+            placeholder="Nhập giá sản phẩm..."
+            value={formData.price}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Giảm giá */}
+        <div>
+          <label className="block text-gray-700 font-medium">Giảm giá (%)</label>
+          <input
+            type="number"
+            name="discount"
+            placeholder="Nhập % giảm giá (nếu có)..."
+            value={formData.discount}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-lg p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Mô tả sản phẩm */}
+        <div>
+          <label className="block text-gray-700 font-medium">Mô tả sản phẩm</label>
+          <textarea
+            name="description"
+            placeholder="Nhập mô tả sản phẩm..."
+            value={formData.description}
+            onChange={handleChange}
+            required
+            rows={4}
+            className="w-full border border-gray-300 rounded-lg p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Ảnh sản phẩm */}
+        <div
+          className="border border-gray-300 p-4 rounded-lg bg-gray-100 cursor-pointer"
+        >
+          <label className="block text-gray-700 font-medium mb-2 cursor-pointer">Ảnh sản phẩm</label>
+          <input
+            id="fileInput"
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleFileChange}
+            className="w-full text-sm text-gray-600 cursor-pointer" // Ẩn input file
+          />
+          {previews.length > 0 && (
+            <div className="flex flex-wrap mt-3 gap-3">
+              {previews.map((preview, index) => (
+                <div key={index} className="relative w-24 h-24">
+                  {/* Nút xóa ảnh */}
+                  <button
+                    type="button"
+                    className="absolute -top-2 -right-2 bg-red-600 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-lg hover:bg-red-700 z-1"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    ✕
+                  </button>
+
+                  {/* Ảnh preview */}
+                  <Image
+                    src={preview}
+                    alt={`Preview ${index + 1}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg shadow-md"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+
+        {/* Nút Submit */}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 cursor-pointer"
+          disabled={loading}
+        >
+          {loading ? "Đang thêm..." : "Thêm sản phẩm"}
+        </button>
+      </form>
+    </div>
+  );
+
 }

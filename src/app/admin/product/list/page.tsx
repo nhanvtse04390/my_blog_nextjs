@@ -46,10 +46,10 @@ const ListProduct: React.FC = () => {
       isImage: true,
     },
     {
-      label: "Actions",
+      label: "",
       renderCell: (row: Product) => (
         <BaseButton onClick={() => alert(`Edit ${row.name}`)}>
-          Edit
+          Chỉnh sửa
         </BaseButton>
       )
     },

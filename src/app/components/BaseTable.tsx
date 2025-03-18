@@ -23,12 +23,15 @@ export type BaseTableProps<T> = {
 
 const BaseTable = <T, >({ headers, rows }: BaseTableProps<T>) => {
     return (
-      <TableContainer component={Paper} sx={{ border: "1px solid #ddd", maxHeight: "80vh", overflowY: "auto" }}>
+      <TableContainer
+        component={Paper}
+        sx={{ border: "1px solid #ddd", maxHeight: "80vh", overflowY: "auto" }}
+      >
           <Table stickyHeader>
               <TableHead>
                   <TableRow>
                       {headers.map((header, index) => (
-                        <TableCell key={index} sx={{ fontWeight: "bold" }}>
+                        <TableCell key={index} sx={{ fontWeight: "bold", minWidth: "150px" }}>
                             {header.label}
                         </TableCell>
                       ))}
@@ -38,8 +41,17 @@ const BaseTable = <T, >({ headers, rows }: BaseTableProps<T>) => {
                   {rows.map((row, rowIndex) => (
                     <TableRow key={rowIndex}>
                         {headers.map((header, headerIndex) => (
-                          <TableCell key={headerIndex}>
-                              {header.renderCell ? ( // ✅ Nếu có renderCell, render nội dung từ parent
+                          <TableCell
+                            key={headerIndex}
+                            sx={{
+                                minWidth: "150px", // Đảm bảo mỗi ô có độ rộng tối thiểu
+                                whiteSpace: "nowrap", // Ngăn xuống dòng
+                                overflow: "hidden", // Ẩn nội dung dư
+                                textOverflow: "ellipsis", // Hiển thị dấu "..."
+                                maxWidth: "200px", // Giới hạn chiều rộng tối đa
+                            }}
+                          >
+                              {header.renderCell ? (
                                 header.renderCell(row)
                               ) : header.isImage ? (
                                 <Image
