@@ -48,7 +48,7 @@ const ListProduct: React.FC = () => {
     {
       label: "Actions",
       renderCell: (row: Product) => (
-        <BaseButton variant="contained" color="primary" onClick={() => alert(`Edit ${row.name}`)}>
+        <BaseButton onClick={() => alert(`Edit ${row.name}`)}>
           Edit
         </BaseButton>
       )
