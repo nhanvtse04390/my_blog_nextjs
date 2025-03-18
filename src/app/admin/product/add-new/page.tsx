@@ -34,21 +34,21 @@ export default function AddProductPage() {
     }
   };
   const handleRemoveImage = (index: number) => {
-    console.log("Removing image at index:", index);
-
     setPreviews((prev) => {
-      const updatedPreviews = [...prev];
+      if (!prev) return prev; // Nếu prev là null, giữ nguyên
+      const updatedPreviews = [...prev]; // Sao chép mảng
       if (updatedPreviews[index]) {
         URL.revokeObjectURL(updatedPreviews[index]); // Giải phóng URL blob
       }
       updatedPreviews.splice(index, 1); // Xóa phần tử khỏi mảng
-      return updatedPreviews;
+      return updatedPreviews.length ? updatedPreviews : null; // Tránh trả về mảng rỗng
     });
 
     setImages((prev) => {
+      if (!prev) return prev;
       const updatedImages = [...prev];
-      updatedImages.splice(index, 1); // Xóa phần tử khỏi mảng
-      return updatedImages;
+      updatedImages.splice(index, 1);
+      return updatedImages.length ? updatedImages : null;
     });
 
     // Xóa giá trị input file
@@ -186,7 +186,7 @@ export default function AddProductPage() {
             onChange={handleFileChange}
             className="w-full text-sm text-gray-600 cursor-pointer" // Ẩn input file
           />
-          {previews.length > 0 && (
+          {previews && previews.length > 0 && (
             <div className="flex flex-wrap mt-3 gap-3">
               {previews.map((preview, index) => (
                 <div key={index} className="relative w-24 h-24">
