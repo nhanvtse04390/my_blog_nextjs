@@ -34,34 +34,37 @@ export default function AddProductPage() {
     }
   };
   const handleRemoveImage = (index: number) => {
+    console.log("Removing image at index:", index);
+
     setPreviews((prev) => {
-      if (!prev) return prev; // Nếu prev là null, giữ nguyên
-      const updatedPreviews = [...prev]; // Sao chép mảng
+      if (!prev) return prev; // Kiểm tra nếu `prev` là null
+      const updatedPreviews = [...prev]; // Sao chép mảng cũ
       if (updatedPreviews[index]) {
         URL.revokeObjectURL(updatedPreviews[index]); // Giải phóng URL blob
       }
-      updatedPreviews.splice(index, 1); // Xóa phần tử khỏi mảng
-      return updatedPreviews.length ? updatedPreviews : null; // Tránh trả về mảng rỗng
+      updatedPreviews.splice(index, 1); // Xóa ảnh bị xóa
+      return updatedPreviews.length ? updatedPreviews : []; // Không trả về `null`
     });
 
     setImages((prev) => {
       if (!prev) return prev;
       const updatedImages = [...prev];
       updatedImages.splice(index, 1);
-      return updatedImages.length ? updatedImages : null;
+      return updatedImages.length ? updatedImages : []; // Trả về `[]` thay vì `null`
     });
 
-    // Xóa giá trị input file
+    // Xử lý input file: giữ lại những file chưa bị xóa
     const fileInput = document.querySelector("input[type='file']") as HTMLInputElement;
     if (fileInput && fileInput.files) {
-      const dataTransfer = new DataTransfer(); // Tạo một danh sách file mới
+      const dataTransfer = new DataTransfer();
       Array.from(fileInput.files)
-        .filter((_, i) => i !== index) // Chỉ giữ lại file không bị xóa
+        .filter((_, i) => i !== index) // Chỉ giữ lại file chưa bị xóa
         .forEach((file) => dataTransfer.items.add(file));
 
-      fileInput.files = dataTransfer.files; // Gán danh sách file mới vào input
+      fileInput.files = dataTransfer.files;
     }
   };
+
 
 
   // Xử lý tải ảnh lên Firebase
