@@ -45,6 +45,14 @@ const ListProduct: React.FC = () => {
       value: 'image' as keyof Product,
       isImage: true,
     },
+    {
+      label: "Actions",
+      renderCell: (row: Product) => (
+        <BaseButton variant="contained" color="primary" onClick={() => alert(`Edit ${row.name}`)}>
+          Edit
+        </BaseButton>
+      )
+    },
   ]
 
   const handleAddNew = () => {
