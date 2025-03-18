@@ -1,24 +1,12 @@
 "use client"
-import {useEffect, useState} from "react";
-import {getImageUrl} from "@/app/utils/getImageUrl";
 import Image from 'next/image';
 import noImage from '../images/noImage.png'
 import {useRouter} from "next/navigation";
 import {Product} from "@/app/types/product";
 
 export default function ProductCard({product}: { product: Product }) {
-  const [image, setImageUrl] = useState("");
   const router = useRouter()
 
-  useEffect(() => {
-    async function fetchImage() {
-      const number = Math.floor(Math.random() * 6) + 1
-      const url = await getImageUrl(`images/${number}.jpg`);
-      setImageUrl(url);
-    }
-
-    fetchImage();
-  }, []);
   const handleRedirect = () => {
     router.push("/product");
     return null;
@@ -66,7 +54,7 @@ export default function ProductCard({product}: { product: Product }) {
       {/* Hình ảnh sản phẩm */}
       <div className="h-[170px] w-[170px] flex items-center">
         <Image
-          src={image || noImage}
+          src={product.image[0] || noImage}
           alt="Hình ảnh sản phẩm"
           width={150}
           height={150}
