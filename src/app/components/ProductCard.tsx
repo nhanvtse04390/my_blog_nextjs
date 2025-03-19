@@ -9,7 +9,7 @@ export default function ProductCard({product}: { product: Product }) {
   const router = useRouter()
 
   const handleRedirect = () => {
-    router.push("/product");
+    router.push(`/shop/product?id=${product._id}`);
     return null;
   }
   return (
