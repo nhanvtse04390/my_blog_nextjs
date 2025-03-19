@@ -3,6 +3,7 @@ import Image from 'next/image';
 import noImage from '../images/noImage.png'
 import {useRouter} from "next/navigation";
 import {Product} from "@/app/types/product";
+import { StaticImageData } from "next/image";
 
 export default function ProductCard({product}: { product: Product }) {
   const router = useRouter()
@@ -54,7 +55,7 @@ export default function ProductCard({product}: { product: Product }) {
       {/* Hình ảnh sản phẩm */}
       <div className="h-[170px] w-[170px] flex items-center">
         <Image
-          src={product.image?.length ? product.image[0] : noImage}
+          src={product.image?.length ? product.image[0] : (noImage as StaticImageData)}
           alt="Hình ảnh sản phẩm"
           width={150}
           height={150}
