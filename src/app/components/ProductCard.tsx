@@ -56,7 +56,7 @@ export default function ProductCard({product}: { product: Product }) {
       <div className="h-[170px] w-[170px] flex items-center">
         <Image
           src={
-            Array.isArray(product.image) && product.image.length > 0
+            Array.isArray(product.image) && product.image.length > 0 && typeof product.image[0] === "string"
               ? product.image[0]
               : noImage.src
           }
