@@ -9,11 +9,6 @@ import {PARAMS} from "@/app/admin/product/list/page";
 import {useError} from "@/app/components/ErrorProvider";
 import {Pagination} from "@mui/material";
 
-export type PARAMS = {
-  page: number;
-  rowsPerPage: number;
-};
-
 export default function Shop() {
   const {showError} = useError();
   const [products, setProducts] = useState<Product[]>([])
