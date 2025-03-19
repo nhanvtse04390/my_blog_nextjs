@@ -39,7 +39,7 @@ export default function Shop() {
         setProducts(response.data.list)
       } catch (error) {
         const err = error as AxiosError;
-        showError(err)
+        showError(err.message)
       }
     };
 
