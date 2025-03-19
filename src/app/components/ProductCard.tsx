@@ -55,7 +55,11 @@ export default function ProductCard({product}: { product: Product }) {
       {/* Hình ảnh sản phẩm */}
       <div className="h-[170px] w-[170px] flex items-center">
         <Image
-          src={product.image?.[0] ? String(product.image[0]) : noImage.src}
+          src={
+            Array.isArray(product.image) && product.image.length > 0
+              ? product.image[0]
+              : noImage.src
+          }
           alt="Hình ảnh sản phẩm"
           width={150}
           height={150}
