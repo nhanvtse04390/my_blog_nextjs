@@ -36,7 +36,6 @@ export default function Shop() {
       try {
         const params: PARAMS = {page: 1, rowsPerPage: 20};
         const response = await getProduct(params);
-        console.log("response",response.data.list)
         setProducts(response.data.list)
       } catch (error) {
         const err = error as AxiosError;

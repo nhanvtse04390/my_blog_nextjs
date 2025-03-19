@@ -58,7 +58,7 @@ export default function ProductCard({product}: { product: Product }) {
           src={
             Array.isArray(product.image) && product.image.length > 0
               ? product.image[0]
-              : noImage
+              : noImage.src
           }
           alt="Hình ảnh sản phẩm"
           width={150}
