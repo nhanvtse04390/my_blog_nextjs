@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import noImage from '../images/noImage.png'
+import noImage from "@/app/images/noImage.png";
 import {useRouter} from "next/navigation";
 import {Product} from "@/app/types/product";
 import React from "react";
