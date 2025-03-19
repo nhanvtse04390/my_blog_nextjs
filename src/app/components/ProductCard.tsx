@@ -54,12 +54,12 @@ export default function ProductCard({product}: { product: Product }) {
       {/* Hình ảnh sản phẩm */}
       <div className="h-[170px] w-[170px] flex items-center">
         <Image
-          src={product.image[0] || noImage}
+          src={product.image?.length ? product.image[0] : noImage}
           alt="Hình ảnh sản phẩm"
           width={150}
           height={150}
-          style={{width: "170px", height: "170px"}}
           className="rounded-xl object-cover"
+          style={{ width: "170px", height: "170px" }}
         />
       </div>
     </div>
