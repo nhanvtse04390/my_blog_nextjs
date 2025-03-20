@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 const ConfirmPopup = ({ isOpen, title, message, onConfirm, onCancel }) => {
   if (!isOpen) return null;
 

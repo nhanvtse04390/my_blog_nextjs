@@ -3,7 +3,7 @@ import Image from "next/image";
 import noImage from "@/app/images/noImage.png";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import {getProduct, getProductById, getRelatedProducts} from "@/app/api/product";
+import {getProduct, getProductById} from "@/app/api/product";
 import { Product } from "@/app/types/product";
 import { AxiosError } from "axios";
 import { useError } from "@/app/components/ErrorProvider";
