@@ -20,9 +20,8 @@ export default function ProductDetail() {
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
 
-  if (!productId) return <div>Không tìm thấy sản phẩm!</div>;
-
   useEffect(() => {
+    if (!productId) return;
     const fetchProductById = async () => {
       try {
         const response = await getProductById(productId);
