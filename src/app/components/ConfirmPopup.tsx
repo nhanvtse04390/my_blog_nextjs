@@ -1,6 +1,14 @@
 "use client";
 
-const ConfirmPopup = ({ isOpen, title, message, onConfirm, onCancel }) => {
+interface ConfirmPopupProps {
+  isOpen: boolean;
+  title?: string;
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+const ConfirmPopup: React.FC<ConfirmPopupProps> = ({ isOpen, title, message, onConfirm, onCancel }) => {
   if (!isOpen) return null;
 
   return (
