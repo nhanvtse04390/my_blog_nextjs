@@ -1,17 +1,35 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
-    const isAdmin = req.cookies.get("isAdmin")?.value;
-    console.log("!isAdmin",!isAdmin)
-    console.log("!isAdmin",isAdmin)
-    if (req.nextUrl.pathname.startsWith("/admin") && isAdmin === 'false') {
-        console.log("vao day k")
+const authMiddleware = (req: NextRequest) => {
+    const token = req.cookies.get("authToken")?.value;
+    if (!token) {
         return NextResponse.redirect(new URL("/shop", req.url));
     }
+    return null;
+};
 
-    return NextResponse.next();
+const adminMiddleware = (req: NextRequest) => {
+    const isAdmin = req.cookies.get("isAdmin")?.value;
+
+    if (req.nextUrl.pathname.startsWith("/admin") && isAdmin !== "true") {
+        return NextResponse.redirect(new URL("/no-access", req.url));
+    }
+    return null;
+};
+
+export function middleware(req: NextRequest) {
+    // Kiểm tra đăng nhập trước
+    const authCheck = authMiddleware(req);
+    if (authCheck) return authCheck;
+
+    // Kiểm tra quyền admin
+    const adminCheck = adminMiddleware(req);
+    if (adminCheck) return adminCheck;
+
+    return NextResponse.next(); // Nếu hợp lệ, tiếp tục request
 }
+
 export const config = {
-    matcher: ["/admin/:path*"], // Chỉ áp dụng cho các route bắt đầu bằng /admin
+    matcher: ["/admin/:path*", "/shop/account/:path*"],
 };
