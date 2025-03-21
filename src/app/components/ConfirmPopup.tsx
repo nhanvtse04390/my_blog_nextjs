@@ -23,13 +23,13 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({ isOpen, title, message, onC
         <div className="flex justify-center gap-4 mt-4">
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer"
           >
             Xác nhận
           </button>
           <button
             onClick={onCancel}
-            className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 transition"
+            className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 transition cursor-pointer"
           >
             Hủy
           </button>

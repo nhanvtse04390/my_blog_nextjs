@@ -21,8 +21,18 @@ export const getProduct = async ({page,rowsPerPage}) => {
 
 export const getProductById = async (id) => {
     try {
-        console.log("id",id)
         const response = await axiosClient.get(`/api/product/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const removeImage = async (productId,imageUrl) => {
+    console.log("productId",productId)
+    console.log("imageUrl",imageUrl)
+    try {
+        const response = await axiosClient.put(`/api/${productId}/remove-image`, {imageUrl});
         return response;
     } catch (error) {
         throw error;

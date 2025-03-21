@@ -48,13 +48,12 @@ const ListProduct: React.FC = () => {
     {
       label: "",
       renderCell: (row: Product) => (
-        <BaseButton onClick={() => alert(`Edit ${row.name}`)}>
+        <BaseButton onClick={() => router.push(`/admin/product/add-new?id=${row._id}`)}>
           Chỉnh sửa
         </BaseButton>
       )
     },
   ]
-
   const handleAddNew = () => {
     router.push("/admin/product/add-new")
   }

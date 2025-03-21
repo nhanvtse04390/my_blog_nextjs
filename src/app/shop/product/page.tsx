@@ -176,7 +176,7 @@ function ProductDetailContent() {
           <div className="mt-10">
             <div
               className="relative flex items-center justify-center text-gray-400 font-semibold rounded-xl p-4 tracking-wide text-lg uppercase">
-              <span className="relative px-4 bg-white rounded-xl z-1 text-3xl">Có thẻ bạn quan tâm</span>
+              <span className="relative px-4 bg-white rounded-xl z-1 text-3xl">Có thể bạn quan tâm</span>
               <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gray-400"></div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
