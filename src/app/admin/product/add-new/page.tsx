@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import {storage} from "../../../utils/firebaseConfig";
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {AxiosError} from "axios";
@@ -10,7 +10,15 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
 
-export default function AddProductPage() {
+export default function AddNewProduct() {
+  return (
+      <Suspense fallback={<div>Loading product details...</div>}>
+        <AddNewProductContent/>
+      </Suspense>
+  );
+}
+
+function AddNewProductContent() {
   const {showError, showSuccess} = useError();
   const [formData, setFormData] = useState({
     name: "",
