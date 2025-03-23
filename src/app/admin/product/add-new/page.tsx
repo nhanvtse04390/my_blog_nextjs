@@ -164,7 +164,7 @@ function AddNewProductContent() {
         ...formData,
         price: Number(formData.price),
         discount: formData.discount ? Number(formData.discount) : undefined,
-        image: isEdit ? imageUrls.concat(oldImages) : imageUrls,
+        image: isEdit ? imageUrls.concat(Array.isArray(oldImages) ? oldImages : [oldImages]) : imageUrls
       };
 
 
