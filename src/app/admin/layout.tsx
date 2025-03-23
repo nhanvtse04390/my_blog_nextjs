@@ -37,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/orders" className="sidebar-link">
             📦 Đơn hàng
           </Link>
-          <Link href="/admin/users" className="sidebar-link">
+          <Link href="/admin/users/list" className="sidebar-link">
             👥 Người dùng
           </Link>
           <Link href="/admin/settings" className="sidebar-link">

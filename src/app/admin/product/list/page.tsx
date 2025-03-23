@@ -8,6 +8,7 @@ import BaseButton from "@/app/components/BaseButton";
 import {useRouter} from "next/navigation";
 import BaseTable from "@/app/components/BaseTable";
 import {Pagination} from "@mui/material";
+import Loading from "@/app/components/Loading";
 
 export type PARAMS = {
   page: number;
@@ -77,7 +78,7 @@ const ListProduct: React.FC = () => {
   }, [page, rowsPerPage]);
 
   if (loading) {
-    return <div>Loading products...</div>;
+    return <Loading></Loading>;
   }
 
   return (
