@@ -60,7 +60,7 @@ function AddNewProductContent() {
 
     if (name === "discount") {
       const discountValue = Number(value);
-      if (0 < discountValue > 100) return;
+      if (discountValue < 0 || discountValue > 100) return;
     }
 
     setFormData({ ...formData, [name]: value });
