@@ -9,6 +9,15 @@ export const addNewProduct = async (Product) => {
     }
 };
 
+export const editProduct = async (productId,Product) => {
+    try {
+        const response = await axiosClient.put(`/api/product/${productId}/edit`, Product);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const getProduct = async ({page,rowsPerPage}) => {
     try {
         const response = await axiosClient.get(`/api/product/list?page=${page}&rowsPerPage=${rowsPerPage}`);

@@ -5,7 +5,7 @@ import {storage} from "../../../utils/firebaseConfig";
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
-import {addNewProduct, getProductById, removeImage} from "@/app/api/product";
+import {addNewProduct, editProduct, getProductById, removeImage} from "@/app/api/product";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
@@ -60,7 +60,7 @@ function AddNewProductContent() {
 
     if (name === "discount") {
       const discountValue = Number(value);
-      if (discountValue > 100) return;
+      if (0 < discountValue > 100) return;
     }
 
     setFormData({ ...formData, [name]: value });
@@ -133,6 +133,7 @@ function AddNewProductContent() {
   const handleRemoveImageOld = async () => {
     try {
       const response = await removeImage(id,imageURLRemove);
+      setOldImages((prevImages) => prevImages && prevImages.filter(image => image !== imageURLRemove));
       showSuccess(response.data.message)
     } catch (error) {
       const err = error as AxiosError;
@@ -163,16 +164,18 @@ function AddNewProductContent() {
         ...formData,
         price: Number(formData.price),
         discount: formData.discount ? Number(formData.discount) : undefined,
-        image: imageUrls,
+        image: isEdit ? imageUrls.concat(oldImages) : imageUrls,
       };
 
 
       //Gửi dữ liệu lên backend
-      const res = await addNewProduct(productData);
+      const res = isEdit ?  await editProduct(id, {...productData}) : await addNewProduct(productData);
       showSuccess(res.data.message)
-      setFormData({name: "", price: "", description: "", discount: ""});
-      setImages([]);
-      setPreviews([]);
+      if(!isEdit) {
+        setFormData({name: "", price: "", description: "", discount: ""});
+        setImages([]);
+        setPreviews([]);
+      }
     } catch (error) {
       const err = error as AxiosError
       showError(err.message)
