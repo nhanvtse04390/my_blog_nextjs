@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Cột 1: Logo & Giới thiệu */}
           <div>
-            <h2 className="text-lg font-semibold text-white">ShopNext</h2>
+            <h2 className="text-lg font-semibold text-white">LEOSHOP</h2>
             <p className="mt-2 text-sm">
               Mua sắm dễ dàng, nhanh chóng và tiện lợi. Luôn đồng hành cùng bạn!
             </p>
