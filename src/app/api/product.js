@@ -27,6 +27,15 @@ export const getProduct = async ({page,rowsPerPage}) => {
     }
 };
 
+export const deleteProduct = async (id) => {
+    try {
+        const response = await axiosClient.put(`/api/product/delete-product/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
 
 export const getProductById = async (id) => {
     try {

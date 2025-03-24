@@ -7,4 +7,5 @@ export type Product = {
     discount?: number;
     rating?: number;
     reviewsCount?: string;
+    isActive?: boolean;
 };

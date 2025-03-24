@@ -1,6 +1,6 @@
 "use client"
 import React, {useEffect, useState} from "react";
-import {getProduct} from "@/app/api/product";
+import {deleteProduct, getProduct} from "@/app/api/product";
 import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
 import {Product} from "@/app/types/product";
@@ -9,6 +9,7 @@ import {useRouter} from "next/navigation";
 import BaseTable from "@/app/components/BaseTable";
 import {Pagination} from "@mui/material";
 import Loading from "@/app/components/Loading";
+import ConfirmPopup from "@/app/components/ConfirmPopup";
 
 export type PARAMS = {
   page: number;
@@ -17,13 +18,16 @@ export type PARAMS = {
 
 
 const ListProduct: React.FC = () => {
-  const {showError} = useError();
+  const {showError, showSuccess} = useError();
   const router = useRouter()
   const [rows, setRows] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
   const [totalItems, setTotalPage] = useState<number>(0)
+  const [popupDelete, setPopupDelete] = useState<boolean>(false)
+  const [idDelete, setIdDelete] = useState<string>()
+  const [shouldRefresh, setShouldRefresh] = useState(false);
   const headerTable = [
     {
       label: 'Tên sản phẩm',
@@ -49,14 +53,40 @@ const ListProduct: React.FC = () => {
     {
       label: "",
       renderCell: (row: Product) => (
-        <BaseButton onClick={() => router.push(`/admin/product/add-new?id=${row._id}`)}>
-          Chỉnh sửa
-        </BaseButton>
+        <div>
+          <BaseButton onClick={() => router.push(`/admin/product/add-new?id=${row._id}`)}>
+            Chỉnh sửa
+          </BaseButton>
+          <BaseButton className='ml-1 bg-red-500' onClick={() => handleShowPopupDeleteProduct(row._id)}>
+            Xóa
+          </BaseButton>
+        </div>
       )
     },
   ]
   const handleAddNew = () => {
     router.push("/admin/product/add-new")
+  }
+
+  const handleShowPopupDeleteProduct = (id: string) => {
+    setPopupDelete(true)
+    setIdDelete(id)
+  }
+  const handleDeleteProduct = async () => {
+    try {
+      const response = await deleteProduct(idDelete);
+      showSuccess(response.data.message)
+      setShouldRefresh(!shouldRefresh)
+    } catch (error) {
+      const err = error as AxiosError;
+      showError(err.message);
+    } finally {
+      setPopupDelete(false)
+    }
+  }
+
+  const handleCancelDeleteProduct = () => {
+    setPopupDelete(false)
   }
 
   useEffect(() => {
@@ -75,7 +105,7 @@ const ListProduct: React.FC = () => {
     };
 
     fetchProducts();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, shouldRefresh]);
 
   if (loading) {
     return <Loading></Loading>;
@@ -107,6 +137,8 @@ const ListProduct: React.FC = () => {
           },
         }}
       />
+      <ConfirmPopup isOpen={popupDelete} message={"Bạn chắc chắn muốn xóa sản phẩm này"} onConfirm={handleDeleteProduct}
+                    onCancel={handleCancelDeleteProduct}></ConfirmPopup>
     </>
   );
 };
