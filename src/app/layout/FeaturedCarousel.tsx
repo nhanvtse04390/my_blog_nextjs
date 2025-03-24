@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import firstBanner from '../images/banner1.jpg';
-import secondBanner from '../images/banner2.jpg';
-import banner3th from '../images/banner3.jpg';
+import firstBanner from '../images/banner1.webp';
+import secondBanner from '../images/banner2.webp';
+import banner3th from '../images/banner3.webp';
 
 const images = [firstBanner, secondBanner, banner3th];
 
@@ -34,8 +34,6 @@ export default function FeaturedCarousel() {
                         key={index}
                         src={image}
                         alt="Featured Image"
-                        width={800}
-                        height={400}
                         className={`absolute w-full h-full object-cover transition-opacity duration-500 ${
                             index === currentIndex ? "opacity-100" : "opacity-0"
                         }`}

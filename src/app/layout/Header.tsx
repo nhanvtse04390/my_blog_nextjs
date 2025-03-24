@@ -24,7 +24,6 @@ const Header = () => {
     const checkIsAdmin = () => {
       if(info) {
         const jsonInfo = JSON.parse(info)
-        console.log("jsonInfo",jsonInfo)
         const isAdmin = jsonInfo.isAdmin
         setIsAdmin(isAdmin)
       } else {

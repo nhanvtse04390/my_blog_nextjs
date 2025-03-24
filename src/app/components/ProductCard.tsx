@@ -19,7 +19,7 @@ export default function ProductCard({product}: { product: Product }) {
     >
       <div className="flex-1">
         {/* Tên sản phẩm */}
-        <h3 className="font-bold truncate">{product.name}</h3>
+        <h3 className="font-bold truncate whitespace-normal">{product.name}</h3>
 
         {/* Giá và giảm giá */}
         {product.discount ? (
@@ -32,7 +32,7 @@ export default function ProductCard({product}: { product: Product }) {
         </span>
             <div className="mt-1">
           <span className="font-bold text-lg font-bold mr-2">
-            {(product.price - (product.price * product.discount) / 100).toLocaleString("vi-VN")}₫
+            {Math.ceil(product.price - (product.price * product.discount) / 100).toLocaleString("vi-VN")}₫
           </span>
               <s className="font-semibold text-red-500">{product.price.toLocaleString("vi-VN")} ₫</s>
             </div>
