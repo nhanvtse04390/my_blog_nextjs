@@ -27,7 +27,7 @@ const ListUsers: React.FC = () => {
   const [rowsPerPage] = React.useState(10);
   const [totalItems, setTotalPage] = useState<number>(0)
   const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [linkRef, setLinkRef] = useState<string>()
+  const [linkRef, setLinkRef] = useState<string>("")
 
   const headerTable = [
     {
