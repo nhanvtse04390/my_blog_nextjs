@@ -54,11 +54,11 @@ export default function Register() {
 
     return (
         <div
-            className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-500/70 via-orange-300 to-pink-500">
-            <div className="w-full flex max-w-4xl row p-8 rounded-lg shadow-md bg-gray-800/5">
+          className="flex min-h-screen items-center justify-center bg-slate-400">
+            <div className="w-full flex max-w-4xl row p-8 rounded-lg shadow-md bg-white">
                 <div className="w-full md:w-1/2 p-8 text-white">
-                    <h2 className="text-2xl font-bold mb-2">Đăng ký tài khoản</h2>
-                    <span className="mb-6">*Vui lòng điền đầy đủ thông tin của bạn</span>
+                    <h2 className="text-2xl font-bold mb-2 text-black">Đăng ký tài khoản</h2>
+                    <span className="mb-6 text-red-400">*Vui lòng điền đầy đủ thông tin của bạn</span>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {/* Email */}
@@ -67,7 +67,7 @@ export default function Register() {
                             <input
                                 type="email"
                                 {...register("email")}
-                                className="w-full px-4 py-2 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-black"
+                                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-black"
                                 placeholder="Nhập email"
                             />
                             <p className="text-red-500">{errors.email?.message}</p>
@@ -79,7 +79,7 @@ export default function Register() {
                             <input
                                 type="password"
                                 {...register("password")}
-                                className="w-full px-4 py-2 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
+                                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
                                 placeholder="Nhập mật khẩu"
                             />
                             <p className="text-red-500">{errors.password?.message}</p>
@@ -91,7 +91,7 @@ export default function Register() {
                             <input
                                 type="password"
                                 {...register("passwordCompare")}
-                                className="w-full px-4 py-2 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
+                                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
                                 placeholder="Nhập lại mật khẩu"
                             />
                             <p className="text-red-500">{errors.passwordCompare?.message}</p>
@@ -103,7 +103,7 @@ export default function Register() {
                             <input
                                 type="text"
                                 {...register("username")}
-                                className="w-full px-4 py-2 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
+                                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
                                 placeholder="Họ tên"
                             />
                             <p className="text-red-500">{errors.username?.message}</p>
@@ -115,13 +115,13 @@ export default function Register() {
                             <input
                                 type="text"
                                 {...register("codeRef")}
-                                className="w-full px-4 py-2 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
+                                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
                                 placeholder="Mã giới thiệu"
                             />
                         </div>
 
                         <div className="text-right">
-                            <Link className="underline" href="/account/login">
+                            <Link className="underline text-red-400" href="/account/login">
                                 *Đăng nhập
                             </Link>
                         </div>

@@ -39,13 +39,13 @@ export default function Login() {
     }
     return (
         <div
-            className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-500/70 via-orange-300 to-pink-500">
-            <div className="w-full flex max-w-4xl row p-8 rounded-lg shadow-md bg-gray-800/5">
-                <div className="w-full md:w-1/2 p-8 text-white">
+          className="flex min-h-screen items-center justify-center bg-slate-400">
+            <div className="w-full flex max-w-4xl row p-8 rounded-lg shadow-md bg-white">
+                <div className="w-full md:w-1/2 p-8 text-black">
                     <h2 className="text-2xl font-bold mb-2">
                         Đăng nhập
                     </h2>
-                    <span className="mb-6">
+                    <span className="mb-6 text-red-400">
                         *vui lòng điền đầy đủ thông tin của bạn
                     </span>
                     <form onSubmit={handleSubmit}>
@@ -56,7 +56,7 @@ export default function Login() {
                             <input
                                 type="email"
                                 name="email"
-                                className="w-full px-4 py-2 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-black"
+                                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-black"
                                 placeholder="Nhập email"
                                 value={formData.email}
                                 onChange={handleChange}
@@ -64,20 +64,20 @@ export default function Login() {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-600 text-sm font-medium mb-2">
+                            <label className="block text-gray-600 text-sm font-bold mb-2 ">
                                 Mật khẩu
                             </label>
                             <input
                                 type="password"
                                 name="password"
-                                className="w-full px-4 py-2 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
+                                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-black"
                                 placeholder="Nhập mật khẩu"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="text-right">
+                        <div className="text-right text-red-400">
                             <Link
                                 className="underline"
                                 href="/account/register"

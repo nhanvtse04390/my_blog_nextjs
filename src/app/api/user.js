@@ -9,3 +9,11 @@ export const getUsers = async ({page,rowsPerPage}) => {
     }
 };
 
+export const getUserById = async (id) => {
+    try {
+        const response = await axiosClient.get(`/api/users/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};

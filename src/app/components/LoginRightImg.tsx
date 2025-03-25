@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoTest from "@/app/images/logoTest.jpg";
+import logoTest from "@/app/images/logo.webp";
 
 export default function LoginRightImg() {
     return (
