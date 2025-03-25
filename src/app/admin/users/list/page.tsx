@@ -84,7 +84,7 @@ const ListUsers: React.FC = () => {
         const params: PARAMS = {page, rowsPerPage};
         const response = await getUsers(params);
         const rows = response.data.list && response.data.list.length
-          ? response.data.list.map(item => ({
+          ? response.data.list.map((item: User) => ({
             ...item,
             createdAt: moment(item.createdAt).format("DD-MM-YYYY")
           }))
