@@ -6,7 +6,6 @@ import {useSearchParams} from "next/navigation";
 import {getUserById} from "@/app/api/user";
 import {AxiosError} from "axios";
 import moment from "moment/moment";
-import ConfirmPopup from "@/app/components/ConfirmPopup";
 
 export default function UserDetail() {
   return (
