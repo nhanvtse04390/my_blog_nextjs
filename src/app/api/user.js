@@ -17,3 +17,12 @@ export const getUserById = async (id) => {
         throw error;
     }
 };
+
+export const editUserByID = async (user) => {
+    try {
+        const response = await axiosClient.put('/api/users/edit',user);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};

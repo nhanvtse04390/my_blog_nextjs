@@ -2,7 +2,7 @@
 
 import React, {Suspense, useEffect, useState} from "react";
 import {useError} from "@/app/components/ErrorProvider";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {getUserById} from "@/app/api/user";
 import {AxiosError} from "axios";
 import moment from "moment/moment";
@@ -16,6 +16,7 @@ export default function UserDetail() {
 }
 
 function UserDetailContent() {
+  const router = useRouter();
   const {showError, showSuccess} = useError();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -23,6 +24,8 @@ function UserDetailContent() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
+    phone: "",
+    address: "",
     codeRef: "",
     createdAt: "",
   });
@@ -69,7 +72,8 @@ function UserDetailContent() {
             name="username"
             value={formData.username || ""}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            disabled
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100"
           />
         </div>
 
@@ -80,9 +84,35 @@ function UserDetailContent() {
             name="email"
             value={formData.email || ""}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            disabled
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100"
           />
         </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Số điện thoại</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.phone || ""}
+            onChange={handleChange}
+            disabled
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Địa chỉ</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.address || ""}
+            onChange={handleChange}
+            disabled
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100"
+          />
+        </div>
+
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Mã giới thiệu</label>
@@ -108,10 +138,11 @@ function UserDetailContent() {
         </div>
 
         <button
-          type="submit"
-          className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700"
+          onClick={() => {router.push("/admin/users/list")}}
+          type="button"
+          className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 cursor-pointer"
         >
-          Lưu thay thay đổi
+          Quay lại
         </button>
       </form>
     </div>

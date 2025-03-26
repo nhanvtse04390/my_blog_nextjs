@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
-import { useError } from "@/app/components/ErrorProvider";
-import { useRouter } from "next/navigation";
+import {useEffect, useState} from "react";
+import {AxiosError} from "axios";
+import {useError} from "@/app/components/ErrorProvider";
+import {useRouter} from "next/navigation";
+import {editUserByID} from "@/app/api/user";
 
 export default function Account() {
-  const { showError } = useError();
+  const {showError,showSuccess} = useError();
   const router = useRouter();
+  const [isEdit, setIsEdit] = useState<boolean>(false)
 
   const [userInfo, setUserInfo] = useState({
     _id: "",
@@ -15,6 +17,7 @@ export default function Account() {
     email: "",
     phone: "",
     address: "",
+    newPassword: "",
   });
 
   useEffect(() => {
@@ -39,6 +42,22 @@ export default function Account() {
     router.push("/account/login");
   };
 
+  const handleEdit = () => {
+    setIsEdit(true)
+  }
+  const callEditAPI = async () => {
+    try {
+      const response = await editUserByID(userInfo)
+      localStorage.setItem("info",response.data.user);
+      showSuccess(response.data.message)
+    } catch (error) {
+      const err = error as AxiosError
+      showError(err.message);
+    } finally {
+      setIsEdit(false)
+    }
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <form className="bg-white shadow-lg rounded-lg max-w-lg w-full p-6">
@@ -56,39 +75,68 @@ export default function Account() {
           <div className="flex flex-col">
             <label className="text-gray-600">Mã giới thiệu:</label>
             <input
-              className="border p-2 rounded"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100"
               value={userInfo._id}
-              readOnly
+              disabled
             />
           </div>
 
           <div className="flex flex-col">
             <label className="text-gray-600">Số điện thoại:</label>
             <input
-              className="border p-2 rounded"
+              className={!isEdit ? "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100" : "border p-2 rounded"}
+              disabled={!isEdit}
               value={userInfo.phone}
-              onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+              onChange={(e) => setUserInfo({...userInfo, phone: e.target.value})}
             />
           </div>
 
           <div className="flex flex-col">
             <label className="text-gray-600">Địa chỉ:</label>
             <input
-              className="border p-2 rounded"
+              className={!isEdit ? "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100" : "border p-2 rounded"}
+              disabled={!isEdit}
               value={userInfo.address}
-              onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
+              onChange={(e) => setUserInfo({...userInfo, address: e.target.value})}
             />
           </div>
+          {
+            isEdit &&
+            (
+              <div className="flex flex-col">
+                <label className="text-gray-600">Mật khẩu mới:</label>
+                <input
+                  value={userInfo.newPassword}
+                  onChange={(e) => setUserInfo({...userInfo, newPassword: e.target.value})}
+                  className={"border p-2 rounded"}
+                />
+              </div>
+            )
+          }
 
         </div>
 
         <div className="mt-6 flex justify-between">
-          <button
-            type="button"
-            className="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition"
-          >
-            Chỉnh sửa
-          </button>
+          {
+            !isEdit ? (
+              <button
+                onClick={handleEdit}
+                type="button"
+                className="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition cursor-pointer"
+              >
+                Chỉnh sửa
+              </button>
+            ) : (
+              <button
+                onClick={callEditAPI}
+                type="button"
+                className="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition cursor-pointer"
+              >
+                Xác nhận
+              </button>
+            )
+          }
+
           <button
             type="button"
             onClick={handleLogout}
