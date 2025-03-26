@@ -10,7 +10,7 @@ const CartPage = () => {
     const {cart, removeFromCart, clearCart} = useCartStore();
 
     // Tính tổng tiền
-    const totalPrice = cart.reduce((sum, item) => item.discount ? (sum + item.price - item.price * item.discount/100) * item.quantity : sum + item.price * item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => item.discount ? sum + (item.price - item.price * item.discount/100) * item.quantity : sum + item.price * item.quantity, 0);
 
     return (
         <div className="max-w-3xl min-h-[100vh] mx-auto p-8 bg-white shadow-xl rounded-lg">
