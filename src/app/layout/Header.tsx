@@ -36,7 +36,7 @@ const Header = () => {
     if (!info) {
       setIsOpenPopup(true)
     } else {
-      alert("detail")
+      router.push("/shop/account")
     }
   }
   const handleConfirm = () => {
