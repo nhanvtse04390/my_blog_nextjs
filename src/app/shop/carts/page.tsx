@@ -10,7 +10,7 @@ const CartPage = () => {
     const {cart, removeFromCart, clearCart} = useCartStore();
 
     // Tính tổng tiền
-    const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => item.discount ? (sum + item.price - item.price * item.discount/100) * item.quantity : sum + item.price * item.quantity, 0);
 
     return (
         <div className="max-w-3xl min-h-[100vh] mx-auto p-8 bg-white shadow-xl rounded-lg">
@@ -40,8 +40,8 @@ const CartPage = () => {
 
                                 <div className="flex-1 ml-4">
                                     <h2 className="text-lg font-medium">{item.name}</h2>
-                                    <p className="text-gray-600">Giá: {item.price} đ</p>
-                                    <p className="text-gray-600">Số lượng: {item.quantity}</p>
+                                    <p className="font-bold">Giá: {item.discount ? (item.price - item.price * item.discount/100).toLocaleString("vi-VN") : item.price.toLocaleString("vi-VN")} đ</p>
+                                    <p className="font-bold">Số lượng: {item.quantity}</p>
                                 </div>
 
                                 <button
@@ -58,7 +58,7 @@ const CartPage = () => {
                         <h2 className="text-xl font-semibold">Tổng tiền: {totalPrice.toLocaleString()} đ</h2>
                         <button
                             onClick={clearCart}
-                            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
                         >
                             Thanh toán
                         </button>
