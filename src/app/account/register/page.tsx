@@ -12,8 +12,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { disabledSate } from "@/app/stores/disabledSate";
 import { userInfo } from "@/app/types/userInfo";
 import { AxiosError } from "axios";
+import React, {Suspense} from "react";
 
 export default function Register() {
+  return (
+    <Suspense fallback={<div>Loading register...</div>}>
+      <RegisterContent/>
+    </Suspense>
+  );
+}
+
+function RegisterContent() {
   const { showError, showSuccess } = useError();
   const router = useRouter();
   const { isDisabled, setDisabled } = disabledSate();
