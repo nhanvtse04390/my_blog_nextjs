@@ -5,6 +5,7 @@ import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
 import {useRouter} from "next/navigation";
 import {editUserByID} from "@/app/api/user";
+import {UserIcon} from "lucide-react";
 
 export default function Account() {
   const {showError,showSuccess} = useError();
@@ -62,11 +63,7 @@ export default function Account() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <form className="bg-white shadow-lg rounded-lg max-w-lg w-full p-6">
         <div className="flex flex-col items-center">
-          <img
-            className="w-24 h-24 rounded-full border-4 border-blue-500"
-            src="https://i.pravatar.cc/150?img=3"
-            alt="User Avatar"
-          />
+          <UserIcon className="w-24 h-24 text-blue-500 border-4 border-gray-500 rounded-full p-4 bg-gray-100" />
           <h2 className="mt-4 text-xl font-semibold text-gray-900">{userInfo.username}</h2>
           <p className="text-gray-500">{userInfo.email}</p>
         </div>

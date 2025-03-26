@@ -2,7 +2,7 @@
 import Image from "next/image";
 import noImage from "@/app/images/noImage.png";
 import React, {Suspense, useEffect, useState} from "react";
-import {useSearchParams} from "next/navigation";
+import { useSearchParams} from "next/navigation";
 import {getProduct, getProductById} from "@/app/api/product";
 import {Product} from "@/app/types/product";
 import {AxiosError} from "axios";
@@ -10,6 +10,7 @@ import {useError} from "@/app/components/ErrorProvider";
 import {FaStar, FaStarHalfAlt, FaRegStar} from "react-icons/fa";
 import {PARAMS} from "@/app/admin/product/list/page";
 import ProductCard from "@/app/components/ProductCard";
+import {useCartStore} from "@/app/stores/cartStore";
 
 export default function ProductDetail() {
   return (
@@ -20,13 +21,14 @@ export default function ProductDetail() {
 }
 
 function ProductDetailContent() {
-  const {showError} = useError();
+  const {showError, showSuccess} = useError();
   const [product, setProduct] = useState<Product>();
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number>(1);
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
+  const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
     if (!productId) return;
@@ -56,13 +58,14 @@ function ProductDetailContent() {
 
     fetchProductById();
     fetchProducts();
-  }, []);
+  }, [productId]);
 
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
   const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleAddToCart = () => {
-    alert(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
+    showSuccess("Đã thêm sản vào giỏ hàng")
+    addToCart(product,quantity)
   };
 
   const handleBuyNow = () => {
@@ -154,11 +157,11 @@ function ProductDetailContent() {
 
               {/* Nút hành động */}
               <div className="flex space-x-4">
-                <button className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                <button className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 cursor-pointer"
                         onClick={handleAddToCart}>
                   🛒 Thêm vào giỏ hàng
                 </button>
-                <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 cursor-pointer"
                         onClick={handleBuyNow}>
                   ⚡ Mua ngay
                 </button>

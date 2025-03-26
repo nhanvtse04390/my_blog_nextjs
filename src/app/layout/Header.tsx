@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {FaShoppingCart, FaUser} from "react-icons/fa";
+import {FaShoppingCart, FaUser, FaUserCog} from "react-icons/fa";
 import {redirectHomePage} from "@/app/hooks/productHook";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
 import {useRouter} from "next/navigation";
+import { useCartStore } from "../stores/cartStore";
 
 const Header = () => {
   const [info, setInfo] = useState<string | null>(null);
@@ -13,6 +14,8 @@ const Header = () => {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const router = useRouter()
   const [isAdmin, setIsAdmin] = useState(false)
+  const cart = useCartStore((state) => state.cart);
+  const cartCount = cart.length;
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedInfo = localStorage.getItem("info");
@@ -66,16 +69,28 @@ const Header = () => {
               <div>
                 <Link href="/admin"
                       className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
-                  <FaShoppingCart/>
+                  <FaUserCog />
                   <span className="font-medium">Quản lý</span>
                 </Link>
               </div>
             ) : (
               <div>
-                <Link href="/public"
-                      className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
-                  <FaShoppingCart/>
+                <Link
+                    href="/shop/carts"
+                    className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200"
+                >
+                  <FaShoppingCart className="text-xl" />
                   <span className="font-medium">Giỏ hàng</span>
+                  {cartCount > 0 && (
+                      <span className="absolute bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+                            style={{
+                              position: "absolute",
+                              top: "-10px",
+                              left: "10px",
+                          }}>
+                          {cartCount}
+                        </span>
+                  )}
                 </Link>
               </div>
             )
