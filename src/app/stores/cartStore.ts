@@ -4,7 +4,7 @@ import {Product} from "@/app/types/product";
 
 type CartState = {
     cart: (Product & { quantity: number })[];
-    addToCart: (product: Product) => void;
+    addToCart: (product: Product, quantity: number) => void;
     removeFromCart: (id: number) => void;
     clearCart: () => void;
 };
