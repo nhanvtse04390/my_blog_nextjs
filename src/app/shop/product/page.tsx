@@ -22,7 +22,13 @@ export default function ProductDetail() {
 
 function ProductDetailContent() {
   const {showError, showSuccess} = useError();
-  const [product, setProduct] = useState<Product>();
+  const [product, setProduct] = useState<Product>({
+    _id: "",
+    name: "",
+    price: 1,
+    image: [],
+    description: "",
+  });
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const [quantity, setQuantity] = useState<number>(1);
