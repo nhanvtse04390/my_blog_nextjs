@@ -1,10 +1,13 @@
 "use client";
 
-import { useCartStore } from "../../stores/cartStore";
-import { FaTrashAlt } from "react-icons/fa";
+import {useCartStore} from "../../stores/cartStore";
+import {FaTrashAlt} from "react-icons/fa";
+import noImage from "@/app/images/noImage.png";
+import Image from "next/image";
+import React from "react";
 
 const CartPage = () => {
-    const { cart, removeFromCart, clearCart } = useCartStore();
+    const {cart, removeFromCart, clearCart} = useCartStore();
 
     // Tính tổng tiền
     const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -23,11 +26,16 @@ const CartPage = () => {
                                 key={index}
                                 className="flex items-center justify-between border p-4 rounded-lg"
                             >
-                                {/* Ảnh sản phẩm */}
-                                <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    className="w-16 h-16 object-cover rounded-lg"
+                                <Image
+                                    src={
+                                        item.image.length > 0
+                                            ? item.image[0]
+                                            : noImage
+                                    }
+                                    alt="Preview"
+                                    className="rounded"
+                                    width={60}
+                                    height={60}
                                 />
 
                                 <div className="flex-1 ml-4">
@@ -40,7 +48,7 @@ const CartPage = () => {
                                     onClick={() => removeFromCart(index)}
                                     className="text-red-500 hover:text-red-700 cursor-pointer"
                                 >
-                                    <FaTrashAlt />
+                                    <FaTrashAlt/>
                                 </button>
                             </li>
                         ))}
