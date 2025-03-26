@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
-import SocialNetwork from "@/app/components/SocialNetwork";
 import LoginRightImg from "@/app/components/LoginRightImg";
 import { useError } from "../../components/ErrorProvider";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,6 +31,8 @@ function RegisterContent() {
   // ✅ Định nghĩa schema bên trong component để lấy được ref
   const schema = z.object({
     email: z.string().email("Email không hợp lệ"),
+    phone: z.string().regex(/^\+?\d{9,15}$/, "Số điện thoại không hợp lệ"),
+    address: z.string().min(1, "Hãy nhập địa chỉ nhận hàng"),
     password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
     passwordCompare: z.string().min(6, "Mật khẩu xác nhận phải có ít nhất 6 ký tự"),
     username: z.string().min(2, "Họ tên phải có ít nhất 2 ký tự"),
@@ -86,7 +87,7 @@ function RegisterContent() {
 
             {/* Mật khẩu */}
             <div className="mb-4">
-              <label className="block text-gray-600 text-sm font-medium mb-2">Mật khẩu</label>
+              <label className="block text-gray-600 text-sm font-bold mb-2">Mật khẩu</label>
               <input
                 type="password"
                 {...register("password")}
@@ -98,7 +99,7 @@ function RegisterContent() {
 
             {/* Nhập lại mật khẩu */}
             <div className="mb-4">
-              <label className="block text-gray-600 text-sm font-medium mb-2">Nhập lại mật khẩu</label>
+              <label className="block text-gray-600 text-sm font-bold mb-2">Nhập lại mật khẩu</label>
               <input
                 type="password"
                 {...register("passwordCompare")}
@@ -110,7 +111,7 @@ function RegisterContent() {
 
             {/* Họ tên */}
             <div className="mb-4">
-              <label className="block text-gray-600 text-sm font-medium mb-2">Họ tên</label>
+              <label className="block text-gray-600 text-sm font-bold mb-2">Họ tên</label>
               <input
                 type="text"
                 {...register("username")}
@@ -118,6 +119,29 @@ function RegisterContent() {
                 placeholder="Họ tên"
               />
               <p className="text-red-500">{errors.username?.message}</p>
+            </div>
+
+            {/* phone */}
+            <div className="mb-4">
+              <label className="block text-gray-600 text-sm font-bold mb-2">Số điện thoại</label>
+              <input
+                type="text"
+                {...register("phone")}
+                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-black"
+                placeholder="Nhập email"
+              />
+              <p className="text-red-500">{errors.phone?.message}</p>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-600 text-sm font-bold mb-2">Địa chỉ</label>
+              <input
+                type="text"
+                {...register("address")}
+                className="w-full px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-black"
+                placeholder="Nhập email"
+              />
+              <p className="text-red-500">{errors.address?.message}</p>
             </div>
 
             {/* Mã giới thiệu */}
@@ -154,10 +178,9 @@ function RegisterContent() {
                 "Đăng ký"
               )}
             </button>
-            <SocialNetwork />
           </form>
         </div>
-        <LoginRightImg />
+        <LoginRightImg/>
       </div>
     </div>
   );
