@@ -50,8 +50,9 @@ export default function CheckoutPage() {
   // Lấy thông tin địa chỉ từ localStorage khi load trang
   useEffect(() => {
     const getInfo = () => {
-      console.log("localStorage.getItem()",localStorage.getItem("info"))
-      const infoParse = localStorage.getItem("info") ? JSON.parse(localStorage.getItem("info")) : {};
+      const infoParse = localStorage.getItem("info")
+        ? JSON.parse(localStorage.getItem("info")!)
+        : {};
       setInfo(infoParse)
       if (infoParse.address) {
         setValue("shippingAddress", infoParse.address);
