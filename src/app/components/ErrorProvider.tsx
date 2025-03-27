@@ -9,7 +9,7 @@ interface ErrorContextType {
   showSuccess: (message: string) => void;
 }
 
-const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
+const ErrorContext = createContext<ErrorContextType>();
 
 export const ErrorProvider = ({ children }: { children: ReactNode }) => {
   const showError = (message: string) => {

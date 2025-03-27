@@ -6,7 +6,7 @@ import {FaShoppingCart, FaUser, FaUserCog} from "react-icons/fa";
 import {redirectHomePage} from "@/app/hooks/productHook";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
 import {useRouter} from "next/navigation";
-import { useCartStore } from "../stores/cartStore";
+import {useCartStore} from "../stores/cartStore";
 
 const Header = () => {
   const [info, setInfo] = useState<string | null>(null);
@@ -25,7 +25,7 @@ const Header = () => {
 
   useEffect(() => {
     const checkIsAdmin = () => {
-      if(info) {
+      if (info) {
         const jsonInfo = JSON.parse(info)
         const isAdmin = jsonInfo.isAdmin
         setIsAdmin(isAdmin)
@@ -66,28 +66,51 @@ const Header = () => {
 
           {
             isAdmin ? (
-              <div>
-                <Link href="/admin"
-                      className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
-                  <FaUserCog />
-                  <span className="font-medium">Quản lý</span>
-                </Link>
-              </div>
+              <>
+                <div>
+                  <Link
+                    href="/shop/carts"
+                    className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200"
+                  >
+                    <FaShoppingCart className="text-xl"/>
+                    <span className="font-medium">Giỏ hàng</span>
+                    {cartCount > 0 && (
+                      <span
+                        className="absolute bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+                        style={{
+                          position: "absolute",
+                          top: "-10px",
+                          left: "10px",
+                        }}>
+                          {cartCount}
+                        </span>
+                    )}
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/admin"
+                        className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200">
+                    <FaUserCog/>
+                    <span className="font-medium">Quản lý</span>
+                  </Link>
+                </div>
+              </>
             ) : (
               <div>
                 <Link
-                    href="/shop/carts"
-                    className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200"
+                  href="/shop/carts"
+                  className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200"
                 >
-                  <FaShoppingCart className="text-xl" />
+                  <FaShoppingCart className="text-xl"/>
                   <span className="font-medium">Giỏ hàng</span>
                   {cartCount > 0 && (
-                      <span className="absolute bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
-                            style={{
-                              position: "absolute",
-                              top: "-10px",
-                              left: "10px",
-                          }}>
+                    <span
+                      className="absolute bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+                      style={{
+                        position: "absolute",
+                        top: "-10px",
+                        left: "10px",
+                      }}>
                           {cartCount}
                         </span>
                   )}

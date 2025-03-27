@@ -5,12 +5,18 @@ import {FaTrashAlt} from "react-icons/fa";
 import noImage from "@/app/images/noImage.png";
 import Image from "next/image";
 import React from "react";
+import {useRouter} from "next/navigation";
 
 const CartPage = () => {
-    const {cart, removeFromCart, clearCart} = useCartStore();
+    const router = useRouter()
+    const {cart, removeFromCart} = useCartStore();
 
     // Tính tổng tiền
     const totalPrice = cart.reduce((sum, item) => item.discount ? sum + (item.price - item.price * item.discount/100) * item.quantity : sum + item.price * item.quantity, 0);
+
+    const order = () => {
+        router.push("/shop/checkout")
+    }
 
     return (
         <div className="max-w-3xl min-h-[100vh] mx-auto p-8 bg-white shadow-xl rounded-lg">
@@ -57,10 +63,10 @@ const CartPage = () => {
                     <div className="mt-6 text-right">
                         <h2 className="text-xl font-semibold">Tổng tiền: {totalPrice.toLocaleString()} đ</h2>
                         <button
-                            onClick={clearCart}
+                            onClick={order}
                             className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
                         >
-                            Thanh toán
+                            Đặt hàng
                         </button>
                     </div>
                 </>
