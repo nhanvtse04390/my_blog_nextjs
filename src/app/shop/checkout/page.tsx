@@ -9,7 +9,6 @@ import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
 import {createOrder} from "@/app/api/order";
 import {useRouter} from "next/navigation";
-import {userInfo} from "@/app/types/userInfo";
 
 // Schema validation với Zod
 const schema = z.object({
