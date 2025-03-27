@@ -9,15 +9,16 @@ interface ErrorContextType {
   showSuccess: (message: string) => void;
 }
 
-const ErrorContext = createContext<ErrorContextType>();
+// Provide default context value to prevent errors when accessing outside provider
+const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 
 export const ErrorProvider = ({ children }: { children: ReactNode }) => {
   const showError = (message: string) => {
-    toast.error(message, { position: "top-right" });
+    toast.error(message, { position: "top-right", autoClose: 3000 });
   };
 
   const showSuccess = (message: string) => {
-    toast.success(message, { position: "top-right" });
+    toast.success(message, { position: "top-right", autoClose: 3000 });
   };
 
   return (
@@ -27,7 +28,7 @@ export const ErrorProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useError = () => {
+export const useError = (): ErrorContextType => {
   const context = useContext(ErrorContext);
   if (!context) {
     throw new Error("useError must be used within an ErrorProvider");
