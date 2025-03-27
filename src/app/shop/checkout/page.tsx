@@ -5,12 +5,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useCartStore } from "@/app/stores/cartStore";
+import {AxiosError} from "axios";
+import {useError} from "@/app/components/ErrorProvider";
+import {createOrder} from "@/app/api/order";
+import {useRouter} from "next/navigation";
 
 // Schema validation với Zod
 const schema = z.object({
-  address: z.string().min(5, "Địa chỉ phải có ít nhất 5 ký tự"),
-  paymentMethod: z.enum(["momo", "vnpay", "affterGetItem"], {
-    required_error: "Vui lòng chọn phương thức thanh toán",
+  shippingAddress: z.string().min(5, "Địa chỉ phải có ít nhất 5 ký tự"),
+  paymentMethod: z.enum(["momo", "vnpay", "COD"], {
+    message: "Vui lòng chọn phương thức thanh toán",
   }),
 });
 
@@ -18,8 +22,11 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function CheckoutPage() {
+  const {showError, showSuccess} = useError();
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
-  const { cart } = useCartStore();
+  const { cart,clearCart } = useCartStore();
+  const [info,setInfo] = useState()
 
   // useForm với kiểu dữ liệu cụ thể
   const {
@@ -42,23 +49,40 @@ export default function CheckoutPage() {
 
   // Lấy thông tin địa chỉ từ localStorage khi load trang
   useEffect(() => {
-    const info = localStorage.getItem("info");
-    const infoParse = info ? JSON.parse(info) : {};
-    if (infoParse.address) {
-      setValue("address", infoParse.address);
+    const getInfo = () => {
+      console.log("localStorage.getItem()",localStorage.getItem("info"))
+      const infoParse = localStorage.getItem("info") ? JSON.parse(localStorage.getItem("info")) : {};
+      setInfo(infoParse)
+      if (infoParse.address) {
+        setValue("shippingAddress", infoParse.address);
+      }
     }
+    getInfo()
   }, [setValue]);
 
   // Xử lý khi submit form
-  const onSubmit = useCallback((data: FormData) => {
+  const onSubmit = useCallback(async (data: FormData) => {
     setLoading(true);
-    console.log("Thanh toán với dữ liệu:", data);
+    try {
+      if (!info || !info._id) {
+        showError("Không tìm thấy thông tin người dùng. Vui lòng thử lại!");
+        setLoading(false);
+        return;
+      }
 
-    setTimeout(() => {
-      alert("Đặt hàng thành công!");
+      let param = { ...data, totalAmount, userId: info._id, items: cart };
+      const response = await createOrder(param);
+      showSuccess(response.data.message);
+      clearCart();
+      router.push("/shop");
+    } catch (error) {
+      console.log("vao day")
+      const err = error as AxiosError;
+      showError(err.message);
+    } finally {
       setLoading(false);
-    }, 2000);
-  }, []);
+    }
+  }, [info, cart, totalAmount, showError, showSuccess, clearCart, router]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
@@ -99,11 +123,11 @@ export default function CheckoutPage() {
             <label className="block font-medium text-gray-700">Địa chỉ nhận hàng</label>
             <input
               type="text"
-              {...register("address")}
+              {...register("shippingAddress")}
               className="w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
               placeholder="Nhập địa chỉ..."
             />
-            {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
+            {errors.shippingAddress && <p className="text-red-500 text-sm mt-1">{errors.shippingAddress.message}</p>}
           </div>
 
           {/* Phương thức thanh toán */}
@@ -111,17 +135,17 @@ export default function CheckoutPage() {
             <label className="block font-medium text-gray-700 mb-2">Phương thức thanh toán</label>
             <div className="space-y-2">
               <label className="flex items-center space-x-2 cursor-pointer">
-                <input type="radio" value="momo" {...register("paymentMethod")} className="w-5 h-5 text-blue-500" />
+                <input type="radio" value="momo" {...register("paymentMethod")} className="w-5 h-5 text-blue-500" disabled/>
                 <span>MoMo Pay</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
-                <input type="radio" value="vnpay" {...register("paymentMethod")} className="w-5 h-5 text-blue-500" />
+                <input type="radio" value="vnpay" {...register("paymentMethod")} className="w-5 h-5 text-blue-500" disabled/>
                 <span>VNPay</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="radio"
-                  value="affterGetItem"
+                  value="COD"
                   {...register("paymentMethod")}
                   className="w-5 h-5 text-blue-500"
                 />
@@ -135,7 +159,7 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition"
+            className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition cursor-pointer"
             disabled={loading}
           >
             {loading ? "Đang xử lý..." : "Thanh toán ngay"}
