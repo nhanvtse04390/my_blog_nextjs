@@ -9,6 +9,7 @@ import {AxiosError} from "axios";
 import {useError} from "@/app/components/ErrorProvider";
 import {createOrder} from "@/app/api/order";
 import {useRouter} from "next/navigation";
+import {userInfo} from "@/app/types/userInfo";
 
 // Schema validation với Zod
 const schema = z.object({
@@ -26,7 +27,7 @@ export default function CheckoutPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false);
   const { cart,clearCart } = useCartStore();
-  const [info,setInfo] = useState()
+  const [info,setInfo] = useState<userInfo>()
 
   // useForm với kiểu dữ liệu cụ thể
   const {
