@@ -65,7 +65,7 @@ export default function CheckoutPage() {
   const onSubmit = useCallback(async (data: FormData) => {
     setLoading(true);
     try {
-      if (!info || (info && !info._id)) {
+      if (!info) {
         showError("Không tìm thấy thông tin người dùng. Vui lòng thử lại!");
         setLoading(false);
         return;
