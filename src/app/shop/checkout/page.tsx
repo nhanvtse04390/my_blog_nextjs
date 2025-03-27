@@ -27,7 +27,7 @@ export default function CheckoutPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false);
   const { cart,clearCart } = useCartStore();
-  const [info,setInfo] = useState<userInfo>()
+  const [info,setInfo] = useState<>()
 
   // useForm với kiểu dữ liệu cụ thể
   const {
@@ -66,7 +66,7 @@ export default function CheckoutPage() {
   const onSubmit = useCallback(async (data: FormData) => {
     setLoading(true);
     try {
-      if (!info || !info._id) {
+      if (!info || (info && !info._id)) {
         showError("Không tìm thấy thông tin người dùng. Vui lòng thử lại!");
         setLoading(false);
         return;
