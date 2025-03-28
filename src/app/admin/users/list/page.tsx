@@ -100,7 +100,7 @@ const ListUsers: React.FC = () => {
     };
 
     fetchUsers();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, showError]);
 
   if (loading) {
     return <Loading></Loading>;

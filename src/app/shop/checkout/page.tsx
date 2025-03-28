@@ -83,7 +83,9 @@ export default function CheckoutPage() {
 
       const param = { ...data, totalAmount, userId: info._id, items: cart };
       const response = await createOrder(param);
-      response && response.data.message ? showSuccess(response.data.message) : "";
+      if (response?.data?.message) {
+        showSuccess(response.data.message);
+      }
       clearCart();
       router.push("/shop");
     } catch (error) {

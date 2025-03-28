@@ -53,7 +53,7 @@ function AddNewProductContent() {
       }
     }
     checkIsEdit()
-  }, []);
+  }, [showError]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

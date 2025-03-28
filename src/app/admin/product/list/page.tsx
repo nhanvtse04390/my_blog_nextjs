@@ -105,7 +105,7 @@ const ListProduct: React.FC = () => {
     };
 
     fetchProducts();
-  }, [page, rowsPerPage, shouldRefresh]);
+  }, [page, rowsPerPage, shouldRefresh, showError]);
 
   if (loading) {
     return <Loading></Loading>;

@@ -64,7 +64,7 @@ function ProductDetailContent() {
 
     fetchProductById();
     fetchProducts();
-  }, [productId]);
+  }, [productId,showError]);
 
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
   const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));

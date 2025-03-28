@@ -33,7 +33,7 @@ export default function Account() {
       }
     };
     getInfo();
-  }, []);
+  }, [showError]);
 
   const handleLogout = () => {
     localStorage.removeItem("info");

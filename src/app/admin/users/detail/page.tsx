@@ -46,7 +46,7 @@ function UserDetailContent() {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, showError]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
