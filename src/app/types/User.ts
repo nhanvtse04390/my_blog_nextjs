@@ -5,4 +5,5 @@ export type User = {
     codeRef: string;
     createdAt: Date;
     updatedAt: Date;
+    phone: string;
 };
