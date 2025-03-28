@@ -72,9 +72,6 @@ export default function CheckoutPage() {
   }, [setValue]);
 
   // Xử lý khi submit form
-  interface OrderResponse {
-    data: { message: string };
-  }
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
@@ -85,7 +82,7 @@ export default function CheckoutPage() {
       }
 
       const param = { ...data, totalAmount, userId: info._id, items: cart };
-      const res : OrderResponse = await createOrder(param)
+      const res = await createOrder(param)
       showSuccess(res.data.message);
       clearCart();
       router.push("/shop");

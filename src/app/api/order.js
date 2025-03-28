@@ -5,6 +5,6 @@ export const createOrder = async (params) => {
         const response = await axiosClient.post('/api/order/add-new',params);
         return response;
     } catch (error) {
-        return error;
+        throw error;
     }
 };
