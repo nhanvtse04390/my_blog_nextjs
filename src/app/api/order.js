@@ -8,3 +8,12 @@ export const createOrder = async (params) => {
         throw error;
     }
 };
+
+export const getListOrder = async ({page,rowsPerPage}) => {
+    try {
+        const response = await axiosClient.get(`/api/order/list?page=${page}&rowsPerPage=${rowsPerPage}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
