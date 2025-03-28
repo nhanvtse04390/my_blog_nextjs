@@ -17,7 +17,7 @@ export type PARAMS = {
 };
 
 const ListOrder: React.FC = () => {
-  const {showError, showSuccess} = useError();
+  const {showError} = useError();
   const router = useRouter()
   const [rows, setRows] = useState<orderItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
