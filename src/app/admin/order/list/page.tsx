@@ -28,31 +28,31 @@ const ListOrder: React.FC = () => {
   const headerTable = [
     {
       label: 'Nguời mua',
-      value: 'userName'
+      value: 'userName' as keyof orderItem
     },
     {
       label: 'Số điện thoại',
-      value: 'userPhone'
+      value: 'userPhone' as keyof orderItem
     },
     {
       label: 'Địa chỉ ship',
-      value: 'shippingAddress'
+      value: 'shippingAddress' as keyof orderItem
     },
     {
       label: 'Giá',
-      value: 'totalAmount'
+      value: 'totalAmount' as keyof orderItem
     },
     {
       label: 'Trạng thái đơn hàng',
-      value: 'orderStatus',
+      value: 'orderStatus' as keyof orderItem
     },
     {
       label: 'Phương thức thanh toán',
-      value: 'paymentMethod',
+      value: 'paymentMethod' as keyof orderItem
     },
     {
       label: 'Ngày tạo',
-      value: 'createdAt',
+      value: 'createdAt' as keyof orderItem
     },
     {
       label: "",
