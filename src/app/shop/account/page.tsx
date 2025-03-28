@@ -26,7 +26,6 @@ export default function Account() {
       try {
         const id = localStorage.getItem("info");
         const parseId = id ? JSON.parse(id) : {};
-        console.log(parseId)
         setUserInfo(parseId);
       } catch (error) {
         const err = error as AxiosError;

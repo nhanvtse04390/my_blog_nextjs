@@ -20,22 +20,23 @@ const schema = z.object({
 
 // Định nghĩa kiểu dữ liệu dựa trên schema
 type FormData = z.infer<typeof schema>;
+type infoUser = {
+  _id: "",
+  email: "",
+  phone: "",
+  password: "",
+  passwordCompare: "",
+  codeRef: "",
+  username: "",
+  address: "",
+}
 
 export default function CheckoutPage() {
   const {showError, showSuccess} = useError();
   const router = useRouter()
   const [loading, setLoading] = useState(false);
   const { cart,clearCart } = useCartStore();
-  const [info,setInfo] = useState<object>({
-    _id: "",
-    email: "",
-    phone: "",
-    password: "",
-    passwordCompare: "",
-    codeRef: "",
-    username: "",
-    address: "",
-  })
+  const [info,setInfo] = useState<infoUser>()
 
   // useForm với kiểu dữ liệu cụ thể
   const {
@@ -86,7 +87,6 @@ export default function CheckoutPage() {
       clearCart();
       router.push("/shop");
     } catch (error) {
-      console.log("vao day")
       const err = error as AxiosError;
       showError(err.message);
     } finally {
