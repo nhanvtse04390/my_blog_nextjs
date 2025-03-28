@@ -78,7 +78,7 @@ const ListOrder: React.FC = () => {
             _id: item._id,
             userName: item.userId.username,
             userPhone: item.userId.phone,
-            totalAmount: item.totalAmount,
+            totalAmount: item.totalAmount.toLocaleString(),
             shippingAddress: item.shippingAddress,
             paymentStatus: item.paymentStatus,
             orderStatus: item.orderStatus === "pending" ? "Chưa giao hàng": item.orderStatus,
