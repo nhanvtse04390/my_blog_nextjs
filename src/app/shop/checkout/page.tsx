@@ -26,7 +26,16 @@ export default function CheckoutPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false);
   const { cart,clearCart } = useCartStore();
-  const [info,setInfo] = useState()
+  const [info,setInfo] = useState<object>({
+    _id: "",
+    email: "",
+    phone: "",
+    password: "",
+    passwordCompare: "",
+    codeRef: "",
+    username: "",
+    address: "",
+  })
 
   // useForm với kiểu dữ liệu cụ thể
   const {
