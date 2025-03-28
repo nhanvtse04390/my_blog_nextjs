@@ -72,7 +72,7 @@ export default function CheckoutPage() {
   }, [setValue]);
 
   // Xử lý khi submit form
-  const onSubmit = useCallback(async (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
       if (!info) {
@@ -83,7 +83,7 @@ export default function CheckoutPage() {
 
       const param = { ...data, totalAmount, userId: info._id, items: cart };
       const res = await createOrder(param);
-      showSuccess(res.data.message);
+      showSuccess(res.data.message as string);
       clearCart();
       router.push("/shop");
     } catch (error) {
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
     } finally {
       setLoading(false);
     }
-  }, [info, cart, totalAmount, showError, showSuccess, clearCart, router]);
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
