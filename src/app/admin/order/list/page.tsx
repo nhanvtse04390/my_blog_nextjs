@@ -24,7 +24,6 @@ const ListOrder: React.FC = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
   const [totalItems, setTotalPage] = useState<number>(0)
-  const [shouldRefresh, setShouldRefresh] = useState(false);
   const headerTable = [
     {
       label: 'Nguời mua',
@@ -97,7 +96,7 @@ const ListOrder: React.FC = () => {
     };
 
     fetchOrders();
-  }, [page, rowsPerPage, shouldRefresh, showError]);
+  }, [page, rowsPerPage, showError]);
 
   if (loading) {
     return <Loading></Loading>;
