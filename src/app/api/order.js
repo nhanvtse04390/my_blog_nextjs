@@ -17,3 +17,12 @@ export const getListOrder = async ({page,rowsPerPage}) => {
         throw error;
     }
 };
+
+export const getOrderById = async (id) => {
+    try {
+        const response = await axiosClient.get(`/api/order/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

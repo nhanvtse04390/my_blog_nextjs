@@ -58,7 +58,7 @@ const ListOrder: React.FC = () => {
       label: "",
       renderCell: (row: orderItem) => (
         <div>
-          <BaseButton onClick={() => router.push(`/admin/add-new?id=${row._id}`)}>
+          <BaseButton onClick={() => router.push(`/admin/order/edit?id=${row._id}`)}>
             Chỉnh sửa
           </BaseButton>
         </div>
