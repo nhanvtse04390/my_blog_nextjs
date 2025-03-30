@@ -15,7 +15,7 @@ export default function EditOrder() {
 }
 
 function EditOrderContent() {
-    const {showError, showSuccess} = useError();
+    const {showError} = useError();
     const [formData, setFormData] = useState({
         name: "",
         price: "",
