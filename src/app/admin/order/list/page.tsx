@@ -17,6 +17,9 @@ export type PARAMS = {
   rowsPerPage: number;
 };
 
+const orderStatusList = ["pending", "confirmed", "shipped", "delivered", "canceled"];
+
+
 const ListOrder: React.FC = () => {
   const {showError} = useError();
   const router = useRouter()
@@ -25,6 +28,8 @@ const ListOrder: React.FC = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
   const [totalItems, setTotalPage] = useState<number>(0)
+  const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
+
   const headerTable = [
     {
       label: 'Nguời mua',
@@ -73,7 +78,7 @@ const ListOrder: React.FC = () => {
         const params: PARAMS = {page, rowsPerPage};
         const response = await getListOrder(params);
         let row: orderItem[] = [];
-        if(response.data.list && response.data.list.length) {
+        if (response.data.list && response.data.list.length) {
           row = response.data.list.map((item: OrderListRespone) => ({
             _id: item._id,
             userName: item.userId.username,
@@ -81,8 +86,8 @@ const ListOrder: React.FC = () => {
             totalAmount: item.totalAmount.toLocaleString(),
             shippingAddress: item.shippingAddress,
             paymentStatus: item.paymentStatus,
-            orderStatus: item.orderStatus === "pending" ? "Chưa giao hàng": item.orderStatus,
-            paymentMethod: item.paymentMethod === "COD" ? "Thanh toán khi nhận hàng": item.paymentMethod,
+            orderStatus: item.orderStatus === "pending" ? "Chưa giao hàng" : item.orderStatus,
+            paymentMethod: item.paymentMethod === "COD" ? "Thanh toán khi nhận hàng" : item.paymentMethod,
             createdAt: moment(item.createdAt).format("DD-MM-YYYY")
           }));
         }
@@ -99,12 +104,32 @@ const ListOrder: React.FC = () => {
     fetchOrders();
   }, [page, rowsPerPage, showError]);
 
+  const handleStatusChange = (status: string) => {
+    setSelectedStatus((prev) =>
+      prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
+    );
+  };
+
   if (loading) {
     return <Loading></Loading>;
   }
 
   return (
     <>
+      <div className="flex gap-4 my-4">
+        {orderStatusList.map((status) => (
+          <label key={status} className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={selectedStatus.includes(status)}
+              onChange={() => handleStatusChange(status)}
+              className="w-4 h-4"
+            />
+            {status === "pending" ? "Chưa giao hàng" : status === "confirmed" ? "Đã xác nhận" : status === "shipped" ? "Đang ship"
+              : status === "delivered" ? "Đã giao hàng" : status === "canceled" ? "Đã hủy" : ""}
+          </label>
+        ))}
+      </div>
       <BaseTable rows={rows} headers={headerTable}/>
       <Pagination
         count={Math.ceil(totalItems / rowsPerPage)}
