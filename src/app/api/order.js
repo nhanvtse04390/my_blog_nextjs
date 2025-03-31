@@ -26,3 +26,12 @@ export const getOrderById = async (id) => {
         throw error;
     }
 }
+
+export const updateOrder = async (id, orderStatus) => {
+    try {
+        const response = await axiosClient.put(`/api/order/${id}/edit`, {orderStatus :orderStatus});
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
