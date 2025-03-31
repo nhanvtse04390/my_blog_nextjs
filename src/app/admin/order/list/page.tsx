@@ -70,37 +70,36 @@ const ListOrder: React.FC = () => {
       )
     },
   ]
-
+  const fetchOrders = async () => {
+    try {
+      const params: PARAMS = {page, rowsPerPage, selectedStatus};
+      const response = await getListOrder(params);
+      let row: orderItem[] = [];
+      if (response.data.list && response.data.list.length) {
+        row = response.data.list.map((item: OrderListResponse) => ({
+          _id: item._id,
+          userName: item.userId.username,
+          userPhone: item.userId.phone,
+          totalAmount: item.totalAmount.toLocaleString(),
+          shippingAddress: item.shippingAddress,
+          paymentStatus: item.paymentStatus,
+          orderStatus: item.orderStatus === "pending" ? "Chưa giao hàng" : item.orderStatus === "confirmed" ? "Đã xác nhận" : item.orderStatus === "shipped" ? "Đang ship"
+            : item.orderStatus === "delivered" ? "Đã giao hàng" : item.orderStatus === "canceled" ? "Đã hủy" : "",
+          paymentMethod: item.paymentMethod === "COD" ? "Thanh toán khi nhận hàng" : item.paymentMethod,
+          createdAt: moment(item.createdAt).format("DD-MM-YYYY")
+        }));
+      }
+      setRows(row);
+      setTotalPage(response.data.pagination.totalItems)
+    } catch (error) {
+      const err = error as AxiosError;
+      showError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const params: PARAMS = {page, rowsPerPage};
-        const response = await getListOrder(params);
-        let row: orderItem[] = [];
-        if (response.data.list && response.data.list.length) {
-          row = response.data.list.map((item: OrderListResponse) => ({
-            _id: item._id,
-            userName: item.userId.username,
-            userPhone: item.userId.phone,
-            totalAmount: item.totalAmount.toLocaleString(),
-            shippingAddress: item.shippingAddress,
-            paymentStatus: item.paymentStatus,
-            orderStatus: item.orderStatus === "pending" ? "Chưa giao hàng" : item.orderStatus,
-            paymentMethod: item.paymentMethod === "COD" ? "Thanh toán khi nhận hàng" : item.paymentMethod,
-            createdAt: moment(item.createdAt).format("DD-MM-YYYY")
-          }));
-        }
-        setRows(row);
-        setTotalPage(response.data.pagination.totalItems)
-      } catch (error) {
-        const err = error as AxiosError;
-        showError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchOrders();
   }, [page, rowsPerPage, showError]);
 
@@ -112,6 +111,11 @@ const ListOrder: React.FC = () => {
 
   if (loading) {
     return <Loading></Loading>;
+  }
+
+  const handleFilter = () => {
+    fetchOrders()
+    console.log("ok")
   }
 
   return (
@@ -129,6 +133,9 @@ const ListOrder: React.FC = () => {
               : status === "delivered" ? "Đã giao hàng" : status === "canceled" ? "Đã hủy" : ""}
           </label>
         ))}
+        <BaseButton onClick={handleFilter}>
+          Lọc
+        </BaseButton>
       </div>
       <BaseTable rows={rows} headers={headerTable}/>
       <Pagination

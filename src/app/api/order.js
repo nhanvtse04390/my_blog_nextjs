@@ -9,9 +9,9 @@ export const createOrder = async (params) => {
     }
 };
 
-export const getListOrder = async ({page,rowsPerPage}) => {
+export const getListOrder = async ({page,rowsPerPage, selectedStatus}) => {
     try {
-        const response = await axiosClient.get(`/api/order/list?page=${page}&rowsPerPage=${rowsPerPage}`);
+        const response = await axiosClient.get(`/api/order/list?page=${page}&rowsPerPage=${rowsPerPage}&orderStatus=${selectedStatus}`);
         return response;
     } catch (error) {
         throw error;
