@@ -43,7 +43,7 @@ function EditOrderContent() {
         try {
           const response = await getOrderById(id);
           const data = response.data
-          const row = {
+          const row : orderItem = {
             _id: data._id,
             userName: data.userId.username,
             userPhone: data.userId.phone,

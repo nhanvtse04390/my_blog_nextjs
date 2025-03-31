@@ -1,7 +1,7 @@
 import {User} from "@/app/types/User";
 import {OrderItem} from "@/app/types/order";
 
-export type OrderListRespone = {
+export type OrderListResponse = {
   _id: string;
   userId: User; // Gán kiểu dữ liệu cho User
   items: OrderItem[];

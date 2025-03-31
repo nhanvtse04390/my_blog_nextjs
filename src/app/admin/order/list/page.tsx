@@ -10,7 +10,7 @@ import Loading from "@/app/components/Loading";
 import {getListOrder} from "@/app/api/order";
 import {orderItem} from "@/app/types/OrderItem";
 import moment from "moment/moment";
-import {OrderListRespone} from "@/app/types/OrderListRespone";
+import {OrderListResponse} from "@/app/types/OrderListResponse";
 
 export type PARAMS = {
   page: number;
@@ -79,7 +79,7 @@ const ListOrder: React.FC = () => {
         const response = await getListOrder(params);
         let row: orderItem[] = [];
         if (response.data.list && response.data.list.length) {
-          row = response.data.list.map((item: OrderListRespone) => ({
+          row = response.data.list.map((item: OrderListResponse) => ({
             _id: item._id,
             userName: item.userId.username,
             userPhone: item.userId.phone,
