@@ -10,7 +10,6 @@ import BaseTable from "@/app/components/BaseTable";
 import {Pagination} from "@mui/material";
 import Loading from "@/app/components/Loading";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
-import moment from "moment/moment";
 
 export type PARAMS = {
   page: number;
