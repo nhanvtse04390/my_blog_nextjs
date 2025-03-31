@@ -27,7 +27,7 @@ function EditOrderContent() {
       userPhone: "",
       totalAmount: 0,
       shippingAddress: "",
-      createdAt: new Date(),
+      createdAt: "",
       orderStatus: "",
       paymentMethod: "",
       items: [],
