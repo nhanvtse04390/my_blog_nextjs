@@ -6,7 +6,7 @@ export type orderItem = {
   userPhone:  string;
   totalAmount: number;
   shippingAddress: string;
-  createdAt: Date;
+  createdAt: string;
   orderStatus: string;
   paymentMethod: string;
   items: { product: Product; quantity: number }[];

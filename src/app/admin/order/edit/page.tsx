@@ -52,7 +52,7 @@ function EditOrderContent() {
             paymentStatus: data.paymentStatus,
             orderStatus: data.orderStatus === "pending" ? "Chưa giao hàng" : data.orderStatus,
             paymentMethod: data.paymentMethod === "COD" ? "Thanh toán khi nhận hàng" : data.paymentMethod,
-            createdAt: moment(data.createdAt).format("DD-MM-YYYY"),
+            createdAt: moment(data.createdAt).format("DD-MM-YYYY").toString(),
             items: data.items,
           }
           setFormData(row);
