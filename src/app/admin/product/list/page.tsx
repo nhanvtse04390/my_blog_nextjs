@@ -10,6 +10,7 @@ import BaseTable from "@/app/components/BaseTable";
 import {Pagination} from "@mui/material";
 import Loading from "@/app/components/Loading";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
+import moment from "moment/moment";
 
 export type PARAMS = {
   page: number;
@@ -94,7 +95,11 @@ const ListProduct: React.FC = () => {
       try {
         const params: PARAMS = {page, rowsPerPage};
         const response = await getProduct(params);
-        setRows(response.data.list);
+        const row = response.data.list.map((item:Product)=> ({
+          ...item,
+          price: item.price.toLocaleString()
+        }))
+        setRows(row);
         setTotalPage(response.data.pagination.totalItems)
       } catch (error) {
         const err = error as AxiosError;
