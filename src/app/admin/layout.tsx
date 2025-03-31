@@ -40,8 +40,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/users/list" className="sidebar-link">
             👥 Người dùng
           </Link>
-          <Link href="/admin/settings" className="sidebar-link">
-            ⚙ Cài đặt
+          <Link href="/admin/statistical" className="sidebar-link">
+            ⚙ Thống kê
           </Link>
         </nav>
       </aside>
