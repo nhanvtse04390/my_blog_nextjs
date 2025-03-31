@@ -9,5 +9,15 @@ export type orderItem = {
   createdAt: string;
   orderStatus: string;
   paymentMethod: string;
-  items: { product: Product; quantity: number }[];
+  items: {
+    _id: string;
+    name: string;
+    price: number;
+    image: string[];
+    description: string;
+    discount?: number;
+    rating?: number;
+    reviewsCount?: string;
+    isActive?: boolean
+    ; quantity: number }[];
 }
