@@ -27,7 +27,7 @@ function EditOrderContent() {
       userPhone: "",
       totalAmount: 0,
       shippingAddress: "",
-      createdAt: Date,
+      createdAt: Date(),
       orderStatus: "",
       paymentMethod: "",
       items: [],
@@ -104,7 +104,7 @@ function EditOrderContent() {
                   key={index}
                   className="flex items-center justify-between border p-4 rounded-lg"
                 >
-                  <Image 
+                  <Image
                     src={
                       item.image.length > 0
                         ? item.image[0]
