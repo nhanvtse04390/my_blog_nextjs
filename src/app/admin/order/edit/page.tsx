@@ -66,11 +66,6 @@ function EditOrderContent() {
     checkIsEdit()
   }, [showError]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {name, value} = e.target;
-    setFormData({...formData, [name]: value});
-  };
-
   // Xử lý submit form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,7 +104,7 @@ function EditOrderContent() {
                   key={index}
                   className="flex items-center justify-between border p-4 rounded-lg"
                 >
-                  <Image
+                  <Image 
                     src={
                       item.image.length > 0
                         ? item.image[0]
