@@ -15,6 +15,7 @@ import {OrderListResponse} from "@/app/types/OrderListResponse";
 export type PARAMS = {
   page: number;
   rowsPerPage: number;
+  selectedStatus: string[];
 };
 
 const orderStatusList = ["pending", "confirmed", "shipped", "delivered", "canceled"];
