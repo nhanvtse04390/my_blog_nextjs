@@ -49,7 +49,6 @@ function EditOrderContent() {
             userPhone: data.userId.phone,
             totalAmount: data.totalAmount.toLocaleString(),
             shippingAddress: data.shippingAddress,
-            paymentStatus: data.paymentStatus,
             orderStatus: data.orderStatus === "pending" ? "Chưa giao hàng" : data.orderStatus,
             paymentMethod: data.paymentMethod === "COD" ? "Thanh toán khi nhận hàng" : data.paymentMethod,
             createdAt: moment(data.createdAt).format("DD-MM-YYYY").toString(),
