@@ -2,13 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { X } from "lucide-react";
+import { X,ArrowRight  } from "lucide-react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 relative">
+      <button className="md:hidden absolute top-1" onClick={() => setIsSidebarOpen(true)}>
+        <ArrowRight size={24}/>
+      </button>
       {/* Sidebar */}
       <aside
         className={`bg-gray-800 text-white w-64 h-screen p-5 flex flex-col fixed top-0 left-0 z-50 transition-transform ${
@@ -18,7 +21,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Sidebar Header */}
         <div className="flex justify-between items-center mb-6">
           <div
-              className="flex items-center justify-center text-2xl font-bold text-gray-900 uppercase tracking-wide rounded-lg cursor-pointer">
+            className="flex items-center justify-center text-2xl font-bold text-gray-900 uppercase tracking-wide rounded-lg cursor-pointer">
             <span className="text-red-500">Leo</span> <span className="text-white">Shop</span>
           </div>
           <button className="md:hidden" onClick={() => setIsSidebarOpen(false)}>

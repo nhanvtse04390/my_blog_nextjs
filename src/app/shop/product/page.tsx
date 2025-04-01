@@ -107,7 +107,7 @@ function ProductDetailContent() {
                 className="rounded-lg object-cover shadow-lg"
                 style={{width: "400px", height: "400px", objectFit: "cover"}}
               />
-              <div className="mt-4 flex space-x-2">
+              <div className="mt-4 space-x-2 hidden md:flex">
                 {product.image?.map((img, index) => (
                   <Image
                     key={index}

@@ -27,7 +27,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#" className="hover:text-white">
-                  Liên hệ a
+                  Liên hệ 0983265862
                 </a>
               </li>
             </ul>
@@ -52,7 +52,7 @@ export default function Footer() {
 
         {/* Dòng bản quyền */}
         <div className="text-center text-sm mt-6 border-t border-gray-700 pt-4">
-          © {new Date().getFullYear()} ShopNext. All rights reserved.
+          © {new Date().getFullYear()} LEOSHOP. All rights reserved.
         </div>
       </div>
     </footer>

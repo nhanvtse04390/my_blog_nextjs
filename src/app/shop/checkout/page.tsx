@@ -81,7 +81,7 @@ export default function CheckoutPage() {
         return;
       }
 
-      const param = { ...data, totalAmount, userId: info._id, items: cart };
+      const param = { ...data, totalAmount, userId: info._id, items: cart, codeRef: info.codeRef };
       const res = await createOrder(param)
       showSuccess(res.data.message);
       clearCart();

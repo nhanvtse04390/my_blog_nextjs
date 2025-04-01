@@ -136,17 +136,20 @@ const Header = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="absolute top-14 right-4 bg-white shadow-md p-4 flex flex-col space-y-3">
-            <Link href="/public" className="hover:text-blue-500">
-              Home
+            <Link href="/shop" className="hover:text-blue-500">
+              Trang chủ
             </Link>
-            <Link href="/products" className="hover:text-blue-500">
-              Products
-            </Link>
-            <Link href="/cart" className="hover:text-blue-500">
-              Cart
-            </Link>
-            <Link href="/account" className="hover:text-blue-500">
-              Account
+            {
+              isAdmin ? (
+                <Link href="/admin" className="hover:text-blue-500">
+                  Quản lý
+                </Link>
+              ) : (
+                <></>
+              )
+            }
+            <Link href="/shop/carts" className="hover:text-blue-500">
+              giỏ hàng
             </Link>
           </div>
         )}
