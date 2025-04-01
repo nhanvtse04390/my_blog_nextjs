@@ -151,6 +151,11 @@ const Header = () => {
             <Link href="/shop/carts" className="hover:text-blue-500">
               giỏ hàng
             </Link>
+            <span onClick={handleAccount}
+                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
+                        <FaUser/>
+                        <span className="font-medium">Tài khoản</span>
+                    </span>
           </div>
         )}
       </div>
