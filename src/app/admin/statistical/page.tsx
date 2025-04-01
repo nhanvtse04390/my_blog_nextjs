@@ -60,7 +60,7 @@ const Statistical: React.FC = () => {
       try {
         const params: PARAMS = {page, rowsPerPage};
         const response = await getUsersByOrder(params);
-        const row: UserRef = response.data.users.map((item: UserRef) => ({
+        const row: UserRef[] = response.data.users.map((item: UserRef) => ({
           ...item,
           totalAmount: item.totalAmount.toLocaleString()
         }))
