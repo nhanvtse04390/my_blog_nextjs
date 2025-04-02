@@ -2,7 +2,7 @@
 import Image from "next/image";
 import noImage from "@/app/images/noImage.png";
 import React, {Suspense, useEffect, useState} from "react";
-import { useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {getProduct, getProductById} from "@/app/api/product";
 import {Product} from "@/app/types/product";
 import {AxiosError} from "axios";
@@ -35,6 +35,8 @@ function ProductDetailContent() {
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
   const addToCart = useCartStore((state) => state.addToCart);
+  const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (!productId) return;
@@ -74,8 +76,11 @@ function ProductDetailContent() {
     addToCart(product,quantity)
   };
 
-  const handleBuyNow = () => {
-    alert(`Mua ngay ${quantity} sản phẩm!`);
+  const handleBuyNow = async () => {
+    setLoading(true)
+    await addToCart(product,quantity)
+    router.push("/shop/checkout")
+    setLoading(false)
   };
 
   const renderStars = (rating: number) => {
@@ -167,10 +172,19 @@ function ProductDetailContent() {
                         onClick={handleAddToCart}>
                   🛒 Thêm vào giỏ hàng
                 </button>
-                <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 cursor-pointer"
-                        onClick={handleBuyNow}>
-                  ⚡ Mua ngay
-                </button>
+                {
+                  !loading ? (
+                    <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 cursor-pointer"
+                            onClick={handleBuyNow}>
+                      ⚡ Mua ngay
+                    </button>
+                  ) : (
+                    <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 cursor-pointer disabled">
+                      ⚡ Đang xử lý
+                    </button>
+                  )
+                }
+
               </div>
             </div>
           </div>

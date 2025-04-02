@@ -113,7 +113,7 @@ const Header = () => {
             ) : (
               <div>
                 <div
-                  onClick={() => handleAccount(1)}
+                  onClick={() => handleAccount(2)}
                   className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
                 >
                   <FaShoppingCart className="text-xl"/>
@@ -133,7 +133,7 @@ const Header = () => {
               </div>
             )
           }
-          <span onClick={() => handleAccount(2)}
+          <span onClick={() => handleAccount(1)}
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
                         <FaUser/>
                         <span className="font-medium">Tài khoản</span>
