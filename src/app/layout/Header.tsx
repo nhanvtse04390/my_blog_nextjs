@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {FaShoppingCart, FaUser, FaUserCog} from "react-icons/fa";
+import {FaHome, FaShoppingCart, FaUser, FaUserCog} from "react-icons/fa";
 import {redirectHomePage} from "@/app/hooks/productHook";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
 import {useRouter} from "next/navigation";
@@ -35,11 +35,15 @@ const Header = () => {
     }
     checkIsAdmin();
   }, [info]);
-  const handleAccount = () => {
+  const handleAccount = (route:number) => {
     if (!info) {
       setIsOpenPopup(true)
     } else {
-      router.push("/shop/account")
+      if(route === 1) {
+        router.push("/shop/account")
+      } else if (route === 2) {
+        router.push("/shop/cart")
+      }
     }
   }
   const handleConfirm = () => {
@@ -97,9 +101,9 @@ const Header = () => {
               </>
             ) : (
               <div>
-                <Link
-                  href="/shop/carts"
-                  className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200"
+                <div
+                  onClick={() => handleAccount(1)}
+                  className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
                 >
                   <FaShoppingCart className="text-xl"/>
                   <span className="font-medium">Giỏ hàng</span>
@@ -114,11 +118,11 @@ const Header = () => {
                           {cartCount}
                         </span>
                   )}
-                </Link>
+                </div>
               </div>
             )
           }
-          <span onClick={handleAccount}
+          <span onClick={() => handleAccount(2)}
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
                         <FaUser/>
                         <span className="font-medium">Tài khoản</span>
@@ -136,21 +140,24 @@ const Header = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="absolute top-14 right-4 bg-white shadow-md p-4 flex flex-col space-y-3">
-            <Link href="/shop" className="hover:text-blue-500">
-              Trang chủ
+            <Link href="/shop" className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
+              <FaHome/>
+              <span className="ml-1">Trang chủ</span>
             </Link>
             {
               isAdmin ? (
-                <Link href="/admin" className="hover:text-blue-500">
-                  Quản lý
+                <Link href="/admin" className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
+                  <FaUserCog/>
+                  <span className="ml-1">Quản lý</span>
                 </Link>
               ) : (
                 <></>
               )
             }
-            <Link href="/shop/carts" className="hover:text-blue-500">
-              giỏ hàng
-            </Link>
+            <span onClick={() => handleAccount(1)} className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
+              <FaShoppingCart/>
+              <span className="ml-1">Giỏ hàng</span>
+            </span>
             <span onClick={handleAccount}
                   className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
                         <FaUser/>
