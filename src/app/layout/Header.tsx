@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {FaHome, FaShoppingCart, FaUser, FaUserCog} from "react-icons/fa";
 import {redirectHomePage} from "@/app/hooks/productHook";
 import ConfirmPopup from "@/app/components/ConfirmPopup";
@@ -16,11 +16,22 @@ const Header = () => {
   const [isAdmin, setIsAdmin] = useState(false)
   const cart = useCartStore((state) => state.cart);
   const cartCount = cart.length;
+  const menuRef = useRef<HTMLDivElement>(null); // Tạo ref để tham chiếu menu
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedInfo = localStorage.getItem("info");
       setInfo(storedInfo);
     }
+  }, []);
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false); // Đóng menu nếu click ngoài menu
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -139,7 +150,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="absolute top-14 right-4 bg-white shadow-md p-4 flex flex-col space-y-3">
+          <div ref={menuRef} className="absolute top-14 right-4 bg-white shadow-md p-4 flex flex-col space-y-3">
             <Link href="/shop" className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer">
               <FaHome/>
               <span className="ml-1">Trang chủ</span>
