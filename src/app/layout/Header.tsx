@@ -42,7 +42,7 @@ const Header = () => {
       if(route === 1) {
         router.push("/shop/account")
       } else if (route === 2) {
-        router.push("/shop/cart")
+        router.push("/shop/carts")
       }
     }
   }
